@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+encoding//src/main/java=MS950
+encoding//src/main/java/category/model/CategoryImpl.java=UTF-8
+encoding//src/main/java/message/model/MessageVO.java=UTF-8
+encoding//src/main/java/message_report/model/MessageReportVO.java=UTF-8
+encoding//src/main/java/post/model/PostVO.java=UTF-8
+encoding//src/main/java/post_report/model/PostReportVO.java=UTF-8
+encoding//src/main/java/post_tag_ref/model/PostTagRefVO.java=UTF-8
+encoding//src/main/java/tag/model/TagVO.java=UTF-8

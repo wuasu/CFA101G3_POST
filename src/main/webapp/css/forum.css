@@ -1,0 +1,169 @@
+
+body{
+	background-color:rgba(235, 232, 232, 0.87);
+	}
+
+.top ul{
+    background-color: rgb(9, 84, 182);
+    height: 30px;
+    display: flex;
+    padding-left: 80%;
+
+}
+
+.top ul li{
+    padding: 0.5rem 0.5rem;
+    
+}
+
+.top ul li a{
+   color: #FFF;
+   text-decoration: none;
+
+}
+
+header{
+    background-color: #FF80A2;
+    height: 70px;
+}
+
+header ul{
+    display: flex;
+    padding: 20px 0px 0px 50px;
+    
+}
+
+header ul li{
+    padding: 0.5rem 0.75rem;
+}
+
+header ul li a{
+    color: #FFF;
+    text-decoration: none;
+}
+
+nav{
+    width: 1000px;
+    height: 360px;
+    border:1px solid #E0E0E0FF;
+        display: flex;
+    justify-content: space-between;
+}
+
+.img{
+    width: 400px;
+    height: 320px;
+    border:1px solid #E0E0E0FF;
+    margin-left: 25px;
+    margin-top: 5px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+
+}
+
+.pic{
+
+    transition: all 0.5s;
+    position: relative;
+}
+
+.pic:hover{
+    transform: scale(1.05, 1.05);
+    cursor: pointer;
+		}
+
+.article{
+    width: 535px;
+    height: 320px;
+    border:1px solid #E0E0E0FF;
+    margin-right: 15px;
+    margin-top: 15px;
+}
+
+.title{
+    font-size: 18px;
+    font-weight: 600;
+    color: #FF80A2;
+    transition: 0.3s;
+}
+.title:hover{
+    color: #000000;
+    cursor: pointer;
+		}
+
+.author{
+    margin-top: 25px;
+    margin-bottom: 20px;
+      font-size: 14px;
+}
+
+.texttop{
+    line-height:25px;
+    font-size: 14px;
+}
+
+section{
+    height: 50px;
+}
+
+section ul{
+    display: flex;
+    padding: 0px 50px 0px 50px;
+}
+
+section ul li{
+    padding: 0.5rem 0.75rem;
+}
+
+
+
+
+
+}
+
+
+
+.box {
+   width: 300px;
+   height: 320px;
+   border-radius:5px;
+   background-color: #F2F2F2FF;
+   margin : 10px;
+   border:1px rgb(248, 208, 208) solid;
+   border-radius:10px ;
+   padding: 10px;
+   position: relative ;
+
+     /* flex-grow: 1;
+   flex-shrink: 1;
+   flex-basis: 200px; */
+}
+.box1 {
+    width: 100%;
+    height: 240px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(213, 223, 241);
+    border-radius:10px ;
+    
+    
+}
+
+
+
+p.text{
+margin: 5px;
+}
+
+
+
+.text1{
+font-size: 18px;
+color: crimson;
+}
+
+.text2{
+font-size: 15px;
+}
