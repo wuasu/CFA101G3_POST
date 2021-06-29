@@ -3,7 +3,7 @@ package com.category.model;
 import java.util.List;
 
 public class CategoryService {
-	private CategoryDAO dao = new CategoryImplXX();
+	private CategoryDAO dao = new CategoryImpl();
 	
 	public void addCategory (CategoryVO category) {
 		dao.insert(category);

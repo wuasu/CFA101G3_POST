@@ -15,7 +15,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 
-public abstract class CategoryImpl implements CategoryDAO {
+
+public  class CategoryImpl implements CategoryDAO {
 
 	private static DataSource ds = null;
 	static {

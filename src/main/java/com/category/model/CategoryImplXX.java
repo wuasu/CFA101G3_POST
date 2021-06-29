@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 
-public class CategoryImplXX implements CategoryDAO {
+public class CategoryImplXX  {
 
 	private static DataSource ds = null;
 	static {
@@ -32,13 +32,13 @@ public class CategoryImplXX implements CategoryDAO {
 //	private static final String GET_ALL_STMT = "SELECT cat_name FROM category order by cat_id";
 //	private static final String GET_ONE_STMT = "SELECT cat_name FROM category where cat_id = ?";
 
-
-	public int insert(CategoryVO category) {
-		String sql = "INSERT INTO category(cat_name) VALUES (?)";
-		int count = template.update(sql, category.getCat_name());
-		System.out.println(count);
-		return count;	
-		}
+//
+//	public int insert(CategoryVO category) {
+//		String sql = "INSERT INTO category(cat_name) VALUES (?)";
+//		int count = template.update(sql, category.getCat_name());
+//		System.out.println(count);
+//		return count;	
+//		}
 	
 	
 	public void update(CategoryVO category) {
@@ -46,12 +46,12 @@ public class CategoryImplXX implements CategoryDAO {
 		template.update(sql,category.getCat_id());
 	}
 	
-	public int delete(Integer cat_id) {
-		String sql = "DELETE  FROM category where cat_id = ?";
-		int count = template.update(sql, cat_id);
-		System.out.println(count);
-		return count;	
-		}
+//	public int delete(Integer cat_id) {
+//		String sql = "DELETE  FROM category where cat_id = ?";
+//		int count = template.update(sql, cat_id);
+//		System.out.println(count);
+//		return count;	
+//		}
 
 
 	public CategoryVO findByCatId(Integer cat_id) {
