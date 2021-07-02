@@ -1,6 +1,13 @@
+  /* font: inherit;  */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap');
 
 body{
 	background-color:rgba(235, 232, 232, 0.87);
+	font-family: 'Noto Sans TC', sans-serif;
+	font-family: 'Caveat', cursive;
+    font-weight: 300;
+    
 	}
 
 .top ul{
@@ -43,7 +50,7 @@ header ul li a{
 }
 
 nav{
-    width: 70%;
+    width: 75%;
     height: 360px;
     border:1px solid #E0E0E0FF;
         display: flex;
@@ -51,8 +58,8 @@ nav{
 }
 
 .img{
-    width: 400px;
-    height: 320px;
+    width: 450px;
+    height: 300px;
     border:1px solid #E0E0E0FF;
     margin-left: 25px;
     margin-top: 5px;
@@ -76,9 +83,11 @@ nav{
 .article{
     width: 535px;
     height: 320px;
-    border:1px solid #E0E0E0FF;
+    border:1px solid rgb(29, 134, 25);
     margin-right: 15px;
     margin-top: 15px;
+    margin-left: 10px;
+    display: inline-block;
 }
 
 .title{
@@ -86,6 +95,7 @@ nav{
     font-weight: 600;
     color: #FF80A2;
     transition: 0.3s;
+    
 }
 .title:hover{
     color: #000000;
@@ -126,22 +136,10 @@ nav{
     color: #5a4e51 ;
 }
 
-/* section{
-    height: 50px;
-}
-
-section ul{
-    display: flex;
-    padding: 0px 50px 0px 50px;
-}
-
-section ul li{
-    padding: 0.5rem 0.75rem;
-} */
 
 /*討論區文章*/
 .postone{
-    width: 80%;
+    width: 70%;
     height: 270px;
     margin-top: 60px;
     margin-left: 50px;
@@ -151,6 +149,7 @@ section ul li{
 
 .postone_content{
     width: 100%;
+     margin-left: 20px;
 
 }
 
@@ -164,6 +163,8 @@ section ul li{
 .postone_top{
     display: flex;
     margin-top: 5px;
+    margin-bottom: 20px;
+    margin-left: 20px;
 }
 
 
@@ -176,6 +177,31 @@ section ul li{
 line-height: 20px;
 }
 
+.mem_author{
+    font-size: 18px;
+    font-weight:bold;
+    margin-bottom: 3px;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 400; 
+}
+
+.time{
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 100;
+}
+
+.postone_cat{
+    font-size: 20px;
+    font-weight:bold;
+}
+
+.postone_title{
+    font-size: 20px; 
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 500;
+}
+
+
 .inner{
     /* display: flex; */
     /* justify-content: space-between; */
@@ -184,8 +210,10 @@ line-height: 20px;
 
 .inner_text{
     display: inline-block;
-width: 80%;
-   line-height:25px;
+    width: 80%;
+    line-height:25px;
+    margin-top: 15px;
+   
 }
 
 .inner_count{
@@ -232,3 +260,5 @@ footer{
     height: 79px;
     background: rgb(65, 62, 62);
 }
+
+

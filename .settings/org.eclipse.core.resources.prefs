@@ -1,9 +1,10 @@
 eclipse.preferences.version=1
 encoding//src/main/java/com/category/model=UTF-8
-encoding//src/main/java/com/category/model/CategoryImpl.java=UTF-8
+encoding//src/main/java/com/category/model/CategoryDAOImpl.java=UTF-8
 encoding//src/main/java/com/category/model/CategoryImplXX.java=UTF-8
 encoding//src/main/java/com/category/model/CategoryVO.java=UTF-8
 encoding//src/main/java/com/message/model=UTF-8
 encoding//src/main/java/com/message_report/model/MessageReportDAO.java=UTF-8
+encoding//src/main/java/com/post/model/PostDAOImpl.java=UTF-8
 encoding//src/main/java/com/post/model/PostVO.java=UTF-8
 encoding//src/main/java/com/tag/model/TagVO.java=UTF-8

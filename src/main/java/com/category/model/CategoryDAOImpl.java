@@ -16,7 +16,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 
 
-public  class CategoryImpl implements CategoryDAO {
+public  class CategoryDAOImpl implements CategoryDAO {
 
 	private static DataSource ds = null;
 	static {
