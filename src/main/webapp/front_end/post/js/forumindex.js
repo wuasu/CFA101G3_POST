@@ -48,14 +48,14 @@ $.ajax({
                 </div>
 
                 <div class="postone_content">
-                    <span class="postone_cat"></span>
+                    <span class="postone_cat">${result[i].CAT_NAME}</span>
                     <span>// </span>
 
                     <span class="postone_title">${result[i].POST_TITLE}</span>
                     <div class="inner">
-                        <p class="inner_text">
+                        <div class="inner_text">
                             ${result[i].POST_CONTENT}
-                        </p>
+                        </div>
                     </div>
                     <div class="inner_count">
 
@@ -72,3 +72,6 @@ $.ajax({
 
     }
 });
+
+
+

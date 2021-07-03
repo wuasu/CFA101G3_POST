@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <title>Document</title>
+    <link rel="stylesheet" href="css/cssreset.css">
+    <link rel="stylesheet" href="css/all.css">
+    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <link rel="stylesheet" href="css/po_article.css">
+</head>
+
+<body>
+
+    <div class="po-container" id="po-container">
+        <div class="content">
+            <div class="po-top">
+                <p>開話題</p>
+                <hr>
+            </div>
+
+            <div class="inner-mem">
+                <div class="left_author_pic">
+                    <img src="images/animal_hamster.png" width="50">
+                </div>
+
+                <div class="right_info">
+                    <ul>
+                        <li class="mem_author">MEM_NAME</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="inner-top" id="inner-top">
+
+                <select class="show-cat" id="show-cat"></select>
+                </br>
+                <input type="text" class="title">
+
+            </div>
+
+            <div contentEditable="true" class="editor" id="editor">
+                12ddd
+            </div>
+            <div class="form-group">
+                <label for="file1">選取圖片:</label>
+                <input type="file" id="file1" name="file1" accept="image/*">
+            </div>
+
+            <div class="inner-btn">
+                <input type="button" value="發佈文章" id="button">
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <script>
+        $.ajax({
+            url: "../../category/categoryServlet",
+            type: "GET",
+            dataType: 'json',
+            success: function (result) {
+                let html = "";
+                for (let i = 0; i < result.length; i++) {
+                    html += `<option value="${result[i].cat_id}">${result[i].cat_name}</option>`;
+                }
+                $("#show-cat").append(html);
+            }
+
+        });
+
+
+
+        let img;
+        var uploader1 = document.getElementById("file1");
+        uploader1.addEventListener("change", readFile);
+        function readFile() {
+            if (uploader1.files && uploader1.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    img = `<img src="${e.target.result}" alt="">`;
+                    document.getElementById('editor').innerHTML += img;
+                    console.log('sss');
+                }
+                reader.readAsDataURL(uploader1.files[0]);
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>

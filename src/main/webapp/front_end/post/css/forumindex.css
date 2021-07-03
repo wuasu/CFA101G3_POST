@@ -1,13 +1,19 @@
   /* font: inherit;  */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Sarabun:ital,wght@0,100;0,200;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600&display=swap');
+
+/* 
+font-family: 'Noto Sans TC', sans-serif  思源黑體 包含中英文;
+font-family: 'Sarabun', sans-serif;   英文正體字  
+font-family: 'Caveat', cursive; 英文藝術字
+*/ 
+
 
 body{
-	background-color:rgba(235, 232, 232, 0.87);
+	background-color:#C5DAD1;
 	font-family: 'Noto Sans TC', sans-serif;
-	font-family: 'Caveat', cursive;
+	font-family: 'Sarabun', sans-serif;
     font-weight: 300;
-    
 	}
 
 .top ul{
@@ -110,7 +116,7 @@ nav{
 
 .texttop{
     line-height:25px;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 
@@ -145,6 +151,8 @@ nav{
     margin-left: 50px;
     border:1px solid rgb(221, 47, 47);
     position: relative;
+ 
+       
 }
 
 .postone_content{
@@ -181,7 +189,7 @@ line-height: 20px;
     font-size: 18px;
     font-weight:bold;
     margin-bottom: 3px;
-    font-family: 'Noto Sans TC', sans-serif;
+    font-family: 'Caveat', cursive;
     font-weight: 400; 
 }
 
@@ -203,6 +211,7 @@ line-height: 20px;
 
 
 .inner{
+  
     /* display: flex; */
     /* justify-content: space-between; */
     
@@ -211,8 +220,12 @@ line-height: 20px;
 .inner_text{
     display: inline-block;
     width: 80%;
+    height: 70px;
+    border: 1px solid blue;
     line-height:25px;
     margin-top: 15px;
+    overflow: hidden;
+
    
 }
 
@@ -222,7 +235,7 @@ bottom:10px;
 }
 
 
-.inner_btn{
+/* .inner_btn{
    display: inline-block;
    float: right;
   height: 60px;
@@ -232,11 +245,11 @@ bottom:10px;
   margin-right: 50px;
   text-align: center;
   line-height: 60px;
-}
+} */
 
-.inner_btn a{
+/* .inner_btn a{
      color:rgb(241, 97, 118) ;
-}
+} */
 
 
 
