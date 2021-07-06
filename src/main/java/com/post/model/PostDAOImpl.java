@@ -23,7 +23,7 @@ public class PostDAOImpl implements PostDAO {
 			e.printStackTrace();
 		}
 	}
-	private static final String INSERT = "INSERT INTO POST (POST_TITLE, POST_CONTENT, POST_TIME, POST_CAT_ID, POST_MEM_ID, POST_STATUS) VALUES=(?, ?, ?, ?, ?, ?)";
+	private static final String INSERT = "INSERT INTO POST (POST_TITLE, POST_CONTENT, POST_TIME, POST_CAT_ID, POST_MEM_ID) VALUES(?, ?, ?, ?, ?)";
 	private static final String UPDATE = "UPDATE POST set POST_TITLE=?, POST_CONTENT=?, POST_TIME=?, POST_CAT_ID=?, POST_MEM_ID=?, POST_STATUS=?  where post_id = ?";
 	private static final String DELETE = "DELETE FROM POST where POST_ID = ?";
 	private static final String GET_ONE_POSTTITLE = "SELECT POST_TITLE FROM POST where POST_ID = ?";
@@ -44,7 +44,7 @@ public class PostDAOImpl implements PostDAO {
 			pstmt.setDate(3, post.getPost_time());
 			pstmt.setInt(4, post.getPost_cat_id());
 			pstmt.setInt(5, post.getPost_mem_id());
-			pstmt.setShort(6, post.getPost_status());
+//			pstmt.setInt(6, post.getPost_status());
 
 			pstmt.executeUpdate();
 			System.out.println("新增成功");
@@ -87,7 +87,7 @@ public class PostDAOImpl implements PostDAO {
 			pstmt.setDate(3, post.getPost_time());
 			pstmt.setInt(4, post.getPost_cat_id());
 			pstmt.setInt(5, post.getPost_mem_id());
-			pstmt.setShort(6, post.getPost_status());
+			pstmt.setInt(6, post.getPost_status());
 			pstmt.setInt(7, post.getPost_id());
 
 			pstmt.executeUpdate();
@@ -216,7 +216,7 @@ public class PostDAOImpl implements PostDAO {
 				post.setPost_time(rs.getDate("post_time"));
 				post.setPost_cat_id(rs.getInt("post_cat_id"));
 				post.setPost_mem_id(rs.getInt("post_mem_id"));
-				post.setPost_status(rs.getShort("post_status"));
+				post.setPost_status(rs.getInt("post_status"));
 				list.add(post);
 			}
 

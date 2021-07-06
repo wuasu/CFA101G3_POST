@@ -1,5 +1,6 @@
 package com.post.model;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -10,8 +11,16 @@ public class PostService {
 	private PostDAO dao = new PostDAOImpl();
 
 	
-	public void addPost (PostVO post) {
+	public PostVO addPost (String post_title, String post_content, Date post_time, Integer post_cat_id,
+			Integer post_mem_id) {
+		PostVO post = new PostVO();
+		post.setPost_title(post_title);
+		post.setPost_content(post_content);
+		post.setPost_time(post_time);
+		post.setPost_cat_id(post_cat_id);
+		post.setPost_mem_id(post_mem_id);
 		dao.insert(post);
+		return post;
 	}
 	
 	public void updatePost(PostVO post) {

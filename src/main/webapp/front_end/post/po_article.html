@@ -5,12 +5,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <title>Document</title>
+    <title>po-article</title>
+    <!-- cssreset CSS -->
     <link rel="stylesheet" href="css/cssreset.css">
+    <!-- fontawesome CSS -->
     <link rel="stylesheet" href="css/all.css">
+    <!-- Bootstrap CSS 4.4-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- JQ CSS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'>
+
     <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <link rel="stylesheet" href="css/catSelect.css">
     <link rel="stylesheet" href="css/po_article.css">
+
+
 </head>
 
 <body>
@@ -36,22 +56,69 @@
 
             <div class="inner-top" id="inner-top">
 
-                <select class="show-cat" id="show-cat"></select>
+
+                <div class="sel sel--black-panther">
+                    <select name="select-profession" id="select-profession">
+                        <option value="7">選擇分類</option>
+                        <option value="1">聊結婚</option>
+                        <option value="2">好店推薦</option>
+                        <option value="3">我要靠北</option>
+                        <option value="4">準媽咪</option>
+                        <option value="5">購便宜</option>
+                        <!-- <option value="6">官方文章</option> -->
+                        <option value="6">其它閒聊</option>
+                    </select>
+                </div>
+
                 </br>
-                <input type="text" class="title">
-
+                <input type="text" class="form-control title" id="title" placeholder="請輸入標題">
             </div>
 
-            <div contentEditable="true" class="editor" id="editor">
-                12ddd
+            <div>
+                <input type="text" class="form-control title" id="title" placeholder="添加標籤(非必填)">
             </div>
-            <div class="form-group">
+
+
+
+            <!-- <div class="form-field-input"> <input type="text" class="description" name="itemBrief" value=""
+                    maxlength="50" /> <em class="hint inputinfo">0/50</em> </div>
+        </div>
+        <div class="row-wrap hash-tag-row">
+            <div class="caption"> <span>標籤</span> <span class="hint-font">(非必填)</span> </div>
+            <div class="form-field-input"> <label class="hashtag-wrap">
+                    <hash-tag-t hidden
+                        data-conf='{"io":{"uri":"\/partner\/merchandise\/ajax_query_hashtag_suggest","params":{"qAmt":"5","action":"htagSuggest"}},"pattern":["^(?!\\d+$)[\\u4e00-\\u9fa5a-zA-Z0-9]{1,20}$"],"maxAmount":"5","duration":"600s","withCredentials":"false"}'>
+                        <h3>hash-tag-t</h3> <input name="hashtags" value="" placeholder="請填寫適當的 #標籤">
+                    </hash-tag-t> <input type="hidden" name="isHashtagActive" value="1">
+                </label> <em class="hint htag" data-max="5">0/5</em>
+                <p class="htag-warn">message</p>
+            </div>
+        </div> -->
+
+
+
+            <!-- <div contentEditable="true" class="editor form-control" id="editor" placeholder="輸入內文">
+                我想說～
+            </div> -->
+
+            <div id="editor2" class="editor2 form-control" contenteditable="true" placeholder="輸入內文">
+                點我可以編輯
+            </div>
+
+
+            <input type="file" name="file" id="file" accept="image/gif, image/jpeg, image/png">
+
+
+            <!-- <div class="form-group">
                 <label for="file1">選取圖片:</label>
                 <input type="file" id="file1" name="file1" accept="image/*">
-            </div>
+            </div> -->
+
+
+
 
             <div class="inner-btn">
-                <input type="button" value="發佈文章" id="button">
+                <input type="button" class="btn btn-dark" value="發佈文章" id="post-button">
             </div>
 
 
@@ -60,39 +127,103 @@
 
 
     <script>
-        $.ajax({
-            url: "../../category/categoryServlet",
-            type: "GET",
-            dataType: 'json',
-            success: function (result) {
-                let html = "";
-                for (let i = 0; i < result.length; i++) {
-                    html += `<option value="${result[i].cat_id}">${result[i].cat_name}</option>`;
-                }
-                $("#show-cat").append(html);
-            }
 
+
+
+
+        /*讀取圖片功能1.0*/
+        // let img;
+        // var uploader1 = document.getElementById("file1");
+        // uploader1.addEventListener("change", readFile);
+        // function readFile() {
+        //     if (uploader1.files && uploader1.files[0]) {
+        //         var reader = new FileReader();
+        //         reader.onload = function (e) {
+        //             img = `<img src="${e.target.result}" alt="">`;
+        //             document.getElementById('editor').innerHTML += img;
+        //             console.log('sss');
+        //         }
+        //         reader.readAsDataURL(uploader1.files[0]);
+        //     }
+        // }
+
+
+
+        /*讀取圖片功能2.0*/
+
+        $('#file').on('change', function () {
+            if (this.files && this.files[0]) {
+                /*判斷檔案大小是否超過*/
+                let size = 0;
+                for (let i = 0; i < this.files.length; i++) {
+                    size = size + this.files[i].size;
+                }
+                if (size > 1024 * 1024 * 5) {
+                    $('#file').val("");//清空file所選圖片
+                    alert("您的檔案大小超過5M");
+                    return;
+                }
+                /******************/
+
+                var reader = new FileReader(); //創建檔案讀取物件
+                reader.onload = function (e) {
+                    let myForm = new FormData();//創建表單物件
+                    let imgData = e.target.result;//獲取檔案讀取後的資料
+                    let blob = new Blob([imgData], { type: 'image/*' });//轉換成blob型別
+                    let fileName = $('#file').val();//獲取檔案名稱
+                    myForm.append(fileName, blob);//把圖片加入到表單內
+                    $.ajax({
+                        type: "post",
+                        enctype: 'multipart/form-data',
+                        url: "../../post/postUploadServlet",
+                        data: myForm,
+                        processData: false,
+                        contentType: false,
+                        success: function (result) {
+                            let template = `<img src="../../post/postUploadServlet?data=${result}" alt="">`;
+
+                            $("#editor2").append(template);
+                            $('#file').val("");//清空file所選圖片
+                        }
+                    });
+                }
+                reader.readAsArrayBuffer(this.files[0]);
+            }
         });
 
 
 
-        let img;
-        var uploader1 = document.getElementById("file1");
-        uploader1.addEventListener("change", readFile);
-        function readFile() {
-            if (uploader1.files && uploader1.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    img = `<img src="${e.target.result}" alt="">`;
-                    document.getElementById('editor').innerHTML += img;
-                    console.log('sss');
+
+
+
+        $("#post-button").on('click', function () {
+            let selectprofession = $("#select-profession").val();
+            let title = $("#title").val();//取title的值
+            let editor2 = $("#editor2").html();
+            console.log(selectprofession);
+            $.ajax({
+                url: "../../post/poArticleServlet",
+                type: "POST",
+                data: { //把data送進servlet
+                    "post_cat_id": selectprofession,
+                    "post_title": title,
+                    "post_content": editor2
+                },
+                success: function (result) {
+                    alert(result);
                 }
-                reader.readAsDataURL(uploader1.files[0]);
-            }
-        }
+
+            });
+        });
+
+
 
 
     </script>
+
+    <script src="js/po_articlejs.js"></script>
+    <script src="js/catSelect.js"></script>
+
 </body>
 
 </html>

@@ -30,8 +30,8 @@ public  class CategoryDAOImpl implements CategoryDAO {
 	private static final String INSERT = "INSERT INTO category cat_name=? VALUES=?";
 	private static final String UPDATE = "UPDATE category set cat_name=? where cat_id = ?";
 	private static final String DELETE = "DELETE FROM category where cat_id = ?";
-	private static final String GET_ONE = "SELECT cat_name FROM category where cat_id = ?";
-	private static final String GET_ALL = "SELECT cat_name FROM category order by cat_id";
+	private static final String GET_ONE = "SELECT * FROM category where cat_id = ?";
+	private static final String GET_ALL = "SELECT * FROM category order by cat_id";
 
 	public void insert(CategoryVO category) {
 		Connection con = null;
@@ -203,6 +203,7 @@ public  class CategoryDAOImpl implements CategoryDAO {
 			while (rs.next()) {
 				
 				category = new CategoryVO();
+				category.setCat_id(rs.getInt("cat_id"));
 				category.setCat_name(rs.getString("cat_name"));
 
 				list.add(category); 

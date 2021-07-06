@@ -10,13 +10,13 @@ public class PostVO implements java.io.Serializable{
 	private Date post_time; //文章發表時間
 	private Integer post_cat_id; //文章分類ID
 	private Integer post_mem_id; //文章作者會員ID
-	private Short post_status; //文章狀態
+	private Integer post_status; //文章狀態
 	
 	
 	public PostVO() {}
 	
 	public PostVO(Integer post_id, String post_title, String post_content, Date post_time, Integer post_cat_id,
-			Integer post_mem_id, Short post_status) {
+			Integer post_mem_id, Integer post_status) {
 		this.post_id = post_id;
 		this.post_title = post_title;
 		this.post_content = post_content;
@@ -65,10 +65,10 @@ public class PostVO implements java.io.Serializable{
 	public void setPost_mem_id(Integer post_mem_id) {
 		this.post_mem_id = post_mem_id;
 	}
-	public Short getPost_status() {
+	public Integer getPost_status() {
 		return post_status;
 	}
-	public void setPost_status(Short post_status) {
+	public void setPost_status(Integer post_status) {
 		this.post_status = post_status;
 	}
 	@Override
