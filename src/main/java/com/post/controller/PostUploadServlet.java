@@ -20,7 +20,7 @@ import javax.servlet.http.Part;
 
 public class PostUploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+	//PO文的頁面 讓會員可上傳圖片到編輯框
 	String saveDirectory = "/images_uploaded";
        
 //讀圖片

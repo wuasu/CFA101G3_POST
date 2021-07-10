@@ -17,7 +17,7 @@ import com.post.model.PostService;
 
 @WebServlet("/post/postServlet")
 public class PostServlet extends HttpServlet {     
-//撈出後端的文章資訊送到前端
+//搭配forumindex  撈出後端的文章資訊送到專欄討論區的首頁 一段貼文一個區塊
 	
 //	getPost指令：
 //	"select p.POST_ID,p.POST_TITLE,p.POST_CONTENT,p.POST_TIME, c.CAT_NAME,m.MEM_NAME,m.MEM_HEADSHOT,p.POST_STATUS from MEMBER m "

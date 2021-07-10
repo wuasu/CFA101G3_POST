@@ -2,9 +2,11 @@ package com.post.model;
 
 import java.util.*;
 
+import com.tag.model.TagVO;
+
 
 interface PostDAO {
-	void insert(PostVO post);
+	void insert(PostVO post,List<TagVO> addTag);
 	void update(PostVO post);
 	void delete(Integer post_id);
 	PostVO findByPostId(Integer post_id); 

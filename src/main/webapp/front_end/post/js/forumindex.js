@@ -31,7 +31,7 @@ $.ajax({
     dataType: 'json',
     success: function (result) {
         console.log(result);
-        for (let i = 0; i < result.length; i++) {
+        for (let i = ((result.length) - 1); i > 0; i--) {
             let template = ` <div class="postone">
             <a href="#">
                 <div class="postone_top">
@@ -64,7 +64,7 @@ $.ajax({
                     </div>
                 </div>
             </a>
-            <hr>
+            <hr class="left1">
         </div>`;
             $("#post-container").append(template);
 

@@ -1,11 +1,9 @@
 package com.tag.model;
 
-
-//??‡ç? æ?™ç±¤TAG
 public class TagVO implements java.io.Serializable{
 
 	private Integer tag_id; //æ¨™ç±¤ID
-	private String tag_name; //æ¨™ç±¤??ç¨±
+	private String tag_name; //æ¨™ç±¤åç¨±
 	
 	public TagVO() {}
 	

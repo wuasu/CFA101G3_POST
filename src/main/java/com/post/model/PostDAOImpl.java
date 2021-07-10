@@ -9,6 +9,11 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import com.post_tag_ref.model.PostTagRefDAOImpl;
+import com.post_tag_ref.model.PostTagRefVO;
+import com.tag.model.TagService;
+import com.tag.model.TagVO;
 //import org.springframework.jdbc.core.BeanPropertyRowMapper;
 //import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -27,29 +32,61 @@ public class PostDAOImpl implements PostDAO {
 	private static final String UPDATE = "UPDATE POST set POST_TITLE=?, POST_CONTENT=?, POST_TIME=?, POST_CAT_ID=?, POST_MEM_ID=?, POST_STATUS=?  where post_id = ?";
 	private static final String DELETE = "DELETE FROM POST where POST_ID = ?";
 	private static final String GET_ONE_POSTTITLE = "SELECT POST_TITLE FROM POST where POST_ID = ?";
-	private static final String GET_ALL = "SELECT POST_TITLE, POST_CONTENT, POST_TIME, POST_CAT_ID, POST_MEM_ID, POST_STATUS, FROM POST where POST_ID = ?";
+	private static final String GET_ALL = "SELECT * FROM POST order by POST_ID";
 	private static final String UPDATE_POST_STATUS = "UPDATE POST set POST_STATUS=0 where POST_ID= ?"; // 0隱藏
-
-	private static final String GET_POST = "select p.POST_ID,p.POST_TITLE,p.POST_CONTENT,p.POST_TIME, c.CAT_NAME,m.MEM_NAME,m.MEM_HEADSHOT,p.POST_STATUS from MEMBER m join POST p on m.MEM_ID = p.POST_MEM_ID join CATEGORY c on p.POST_CAT_ID = c.CAT_ID";
-
-	public void insert(PostVO post) {
+	private static final String GET_POST = "select p.POST_ID,p.POST_TITLE,p.POST_CONTENT,p.POST_TIME, c.CAT_NAME,m.MEM_NAME,m.MEM_HEADSHOT,p.POST_STATUS from MEMBER m join POST p on m.MEM_ID = p.POST_MEM_ID join CATEGORY c on p.POST_CAT_ID = c.CAT_ID order by POST_ID";
+    //join版的表格要設定order by POST_ID 才會抓到最新的文章(不然會抓到最新的會員)
+	
+	public void insert(PostVO post, List<TagVO> addTag) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERT);
+			con.setAutoCommit(false);
+			String[] col = { "post_id" };//自增主鍵綁定 新增時可得知PK
+			pstmt = con.prepareStatement(INSERT, col);
 
 			pstmt.setString(1, post.getPost_title());
 			pstmt.setString(2, post.getPost_content());
 			pstmt.setDate(3, post.getPost_time());
 			pstmt.setInt(4, post.getPost_cat_id());
 			pstmt.setInt(5, post.getPost_mem_id());
-//			pstmt.setInt(6, post.getPost_status());
-
 			pstmt.executeUpdate();
-			System.out.println("新增成功");
+			
+			String post_id = null;
+			ResultSet rs = pstmt.getGeneratedKeys(); //找到自增主鍵值(PK)
+			if (rs.next()) {
+				post_id = rs.getString(1);//取得第一列的值(最新的一筆)
+				System.out.println("post_id="+post_id);
 
-		} catch (SQLException se) {
+			} else {
+				System.out.println("未取得自增主鍵值");
+			}
+			rs.close();
+			System.out.println("Post新增成功");
+
+			PostTagRefDAOImpl postTagRefDAO = new PostTagRefDAOImpl();
+			for (TagVO tagVO : addTag) {
+				PostTagRefVO postTagRefVO = new PostTagRefVO();
+				postTagRefVO.setPtr_post_id(new Integer(post_id));
+				postTagRefVO.setPtr_tag_id(tagVO.getTag_id());
+				System.out.println(postTagRefVO);
+				System.out.println(con);
+				
+				postTagRefDAO.insert(postTagRefVO,con);
+			}
+			con.commit();
+			con.setAutoCommit(true);
+
+		} catch (Exception se) {
+			se.printStackTrace();
+			if(con!=null) {
+				try {
+					con.rollback();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (pstmt != null) {
@@ -70,7 +107,7 @@ public class PostDAOImpl implements PostDAO {
 
 	}
 
-//新增資料
+//修改資料
 	public void update(PostVO post) {
 
 		Connection con = null;
@@ -162,7 +199,8 @@ public class PostDAOImpl implements PostDAO {
 			while (rs.next()) {
 
 				post = new PostVO();
-				post.setPost_title(rs.getString("setPost_title"));
+				post.setPost_id(rs.getInt("post_id"));
+				post.setPost_title(rs.getString("post_title"));
 
 			}
 		} catch (SQLException se) {
@@ -209,8 +247,9 @@ public class PostDAOImpl implements PostDAO {
 
 			while (rs.next()) {
 //	GET_ALL = "SELECT POST_TITLE, POST_CONTENT, POST_TIME,"
-//	+ " POST_CAT_ID, POST_MEM_ID, POST_STATUS, FROM POST where POST_ID = ?";		
+//	+ " POST_CAT_ID, POST_MEM_ID, POST_STATUS, FROM POST order by POST_ID";		
 				post = new PostVO();
+				post.setPost_id(rs.getInt("post_id"));
 				post.setPost_title(rs.getString("post_title"));
 				post.setPost_content(rs.getString("post_content"));
 				post.setPost_time(rs.getDate("post_time"));
@@ -283,8 +322,6 @@ public class PostDAOImpl implements PostDAO {
 	}
 
 	public List getPost() {
-
-		
 		List list = new ArrayList();
 		PostVO postAll = null;
 		Connection con = null;

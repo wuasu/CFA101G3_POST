@@ -5,22 +5,23 @@ import java.util.List;
 import java.util.Map;
 
 import com.category.model.CategoryVO;
+import com.tag.model.TagVO;
 
 public class PostService {
 
 	private PostDAO dao = new PostDAOImpl();
 
 	
-	public PostVO addPost (String post_title, String post_content, Date post_time, Integer post_cat_id,
-			Integer post_mem_id) {
+	public void addPost (String post_title, String post_content, Date post_time, Integer post_cat_id,
+			Integer post_mem_id, List<TagVO> addTag) {
 		PostVO post = new PostVO();
 		post.setPost_title(post_title);
 		post.setPost_content(post_content);
 		post.setPost_time(post_time);
 		post.setPost_cat_id(post_cat_id);
 		post.setPost_mem_id(post_mem_id);
-		dao.insert(post);
-		return post;
+		dao.insert(post,addTag);
+		//addTag:經過判斷的標籤List，已在TagService setTag_name
 	}
 	
 	public void updatePost(PostVO post) {
