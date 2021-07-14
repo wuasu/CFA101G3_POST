@@ -18,7 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @WebServlet("/category/categoryServlet")
 public class CategoryServlet extends HttpServlet {
 
-	
+	  //搭配fourmindex.html  抓出所有文章分類 於精選文章下方區塊
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=UTF-8"); 
 		CategoryService categoryService = new CategoryService();

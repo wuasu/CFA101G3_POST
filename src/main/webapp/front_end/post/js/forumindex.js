@@ -6,7 +6,7 @@ $.ajax({
 
         for (let i = 0; i < result.length; i++) {
             let element = result[i].cat_name;
-            let template = `<li><a href="#">${element}<span>(258)</span></a></li>`;
+            let template = `<li><a href="#">${element}<span>(111)</span></a></li>`;
             $("#category-data").append(template);
 
         }
@@ -14,15 +14,9 @@ $.ajax({
     }
 });
 
-// $.ajax({
-//     type: "post",
-//     url: "../../category/categoryServlet",
-//     dataType: 'json',
-//     success: function (result) {
-//             let element = result[0].cat_name;
-//             $(".postone_cat").append(element);
-//         }
-// });
+
+
+
 
 
 $.ajax({
@@ -31,9 +25,9 @@ $.ajax({
     dataType: 'json',
     success: function (result) {
         console.log(result);
-        for (let i = ((result.length) - 1); i > 0; i--) {
+        for (let i = ((result.length) - 1); i >= 0; i--) {
             let template = ` <div class="postone">
-            <a href="#">
+            <a href="show-article-message.html?post_id=${result[i].POST_ID}">
                 <div class="postone_top">
                     <div class="left_author_pic">
                         <img src="data:image/*;base64,${result[i].MEM_HEADSHOT}" width="50">
@@ -72,6 +66,3 @@ $.ajax({
 
     }
 });
-
-
-

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>article-message</title>
+    <link rel="stylesheet" href="css/all.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'>
+    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <link rel="stylesheet" href="css/cssreset.css">
+    <link rel="stylesheet" href="css/show_article_message.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="top">
+            <ul>
+                <li><a href="#">首頁</a></li>
+                <li><a href="/CFA101G3/front_end/member/login.html"><i class="fas fa-sign-out-alt"></i>登入</a>
+                </li>
+                <li><a href="/CFA101G3/front_end/member/memberBuyProfile.html"><i class="fas fa-home"></i>
+                        會員系統</a></li>
+            </ul>
+        </div>
+
+
+        <!--上面增加的小色塊-->
+        <div class="nav1"></div>
+        <ul class="nav2">
+            <li><a href="#">婚禮攝影<br>Photography</a></li>
+            <li><a href="#">婚禮場地<br>Location</a></li>
+            <li><a href="#" class="logo"><img src="images/MHlogo_01.svg"></a></li>
+            <li><a href="#">婚禮週邊<br>Product</a></li>
+            <li><a href="#">專欄討論<br>Post</a></li>
+        </ul>
+    </header>
+
+    <div class="big_container">
+        <!-- 左側文章處+留言-->
+        <div class="big_left">
+
+            <div class="category">
+                <ul id="category-data">
+                    <li><a href="#">所有話題<span>(258)</span></a></li>
+                </ul>
+            </div>
+
+            <div id="post-container">
+                <!-- 一則討論區貼文 -->
+            </div>
+
+            <!--輸入留言處-->
+            <div class="message-box">
+                <span>
+                    我要回應
+                </span>
+                <textarea cols="80" class="message-area" id="descri_main" name="descri_main" maxlength="500"
+                    placeholder="我要回應..."></textarea>
+                <div class="reply-box">
+                    <span style="color:green;display: none;" id="reply_ok">留言成功</span>
+                    <span style="color:rgb(156, 39, 39);display: none;" id="reply_error">內容不能空白</span>
+                    <div class="btn-box">
+                        <input type="button" class="reply_btn" value="發送" id="reply_btn">
+                    </div>
+                    <!-- <br style="clear:both;"> -->
+                </div>
+            </div>
+
+            <div class="messageSum">
+                <span>
+                    共15則回應
+                </span>
+            </div>
+
+
+
+            <!--其他會員的留言-->
+            <div class="all-message">
+                <div class="one-message" id="one-message">
+                    <div class="message-top">
+                        <div class="left_author_pic">
+                            <img src="images/animal_panda.png" width="40">
+                        </div>
+
+                        <div class="right_info">
+                            <ul>
+                                <li class="mem_author">Apple</li>
+                                <li class="time">留言時間</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="inner-message" id="inner-message">
+                        我是留言我是留言
+                        <hr class="left1">
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- 右側bar-->
+        <div class="big_right">
+            <div class="sidebar">
+                <section class="ad">
+                    <ul>
+                        <li><a href="#" target="_blank"><img src="images/ad01.jpg" alt="" title="" width="300"
+                                    border="0"></a></li>
+                        <li><a href="#" target="_blank"><img src="images/ad02.jpg" alt="" title="" width="300"
+                                    border="0"></a></li>
+                    </ul>
+                </section>
+
+                <section class="goto_post">
+                    <div class="text">
+                        <p>解疑惑｜找出口｜聊生活 </p><span>關於結婚的大小事，不知道能問誰？沒人聽你說？歡迎點擊【我想發文】即可開啟話題 </span>
+                    </div>
+                    <a href="/CFA101G3/front_end/post/po_article.html" id="">
+                        我想發文</a>
+                </section>
+
+                <section class="hot-articles">
+                    <span>熱門文章</span><span>HOT ARTICLES</span>
+                    <div></div>
+                    <hr class="right1">
+                </section>
+
+
+
+
+            </div>
+        </div>
+
+    </div>
+    <footer></footer>
+    <script>
+        $.ajax({
+            type: "post",
+            url: "../../category/categoryServlet",
+            dataType: 'json',
+            success: function (result) {
+                for (let i = 0; i < result.length; i++) {
+                    let element = result[i].cat_name;
+                    let template = `<li><a href="#">${element}<span>(258)</span></a></li>`;
+                    $("#category-data").append(template);
+                }
+            }
+        });
+
+
+
+        let urlParams = new URLSearchParams(window.location.search);
+        let param = urlParams.get("post_id");
+        console.log(param);
+        if (param != null) {
+            $.ajax({
+                type: "post",
+                url: "../../post/showOnePostBypostIdServlet",
+                dataType: 'json',
+                async: false,
+                data: {
+                    "post_id": param,
+                    "action": "getPost"
+                },
+                success: function (result) {
+                    console.log(result);
+                    let template = ` <div class="post-box">
+                     <div class="post-top">
+                         <div class="left_author_pic">
+                             <img src="data:image/*;base64,${result.MEM_HEADSHOT}" width="50">
+                         </div>
+
+                         <div class="right_info">
+                             <ul>
+                                 <li class="mem_author">${result.MEM_NAME}</li>
+                                 <li class="time">${result.POST_TIME}</li>
+                             </ul>
+                         </div>
+                     </div>
+
+                     <div class="post-content">
+                         <span class="postone_cat">${result.CAT_NAME}</span>
+                         <span>/ / </span>
+
+                         <span class="post-title">${result.POST_TITLE}</span>
+                          <div class="inner_count" id="inner_count">
+                             ‧ 回覆 <span> 10 </span>
+                             ‧ 瀏覽 <span> 339 </span>
+                         </div>
+
+
+
+                         <div class="inner">
+                              <div class="inner_tag" id="inner_tag">
+                            
+                              </div>
+                             <div class="inner_text">
+                                 ${result.POST_CONTENT}
+                             </div>
+                         </div>   
+                     </div>
+             </div>`;
+                    $("#post-container").append(template);
+                }
+            });
+
+            $.ajax({
+                type: "post",
+                url: "../../post/showOnePostBypostIdServlet",
+                dataType: 'json',
+                async: false,
+                data: {
+                    "post_id": param,
+                    "action": "getTag"
+                },
+                success: function (result) {
+                    console.log(result)
+                    for (const tags of result) {
+                        if (tags.tagVO.tag_name != "") {
+                            $("#inner_tag").append(`#${tags.tagVO.tag_name} `);
+                        }
+                    }
+                }
+            })
+        }
+
+
+
+
+
+
+
+
+
+
+
+        // $.ajax({
+        //     type: "post",
+        //     url: "../../message/showMessageServlet",
+        //     dataType: 'json',
+        //     data: { "mes_post_id": mes_post_id },
+        //     success: function (result) {
+        //         let template = `${result[0].mes_post_name}`;
+        //         $("#inner-message").append(template);
+        //     }
+        // });
+
+    </script>
+
+
+</body>
+
+</html>

@@ -27,7 +27,7 @@ public  class CategoryDAOImpl implements CategoryDAO {
 			e.printStackTrace();
 		}
 	}
-	private static final String INSERT = "INSERT INTO category cat_name VALUES (?)";
+	private static final String INSERT = "INSERT INTO category (cat_name) VALUES (?)";
 	private static final String UPDATE = "UPDATE category set cat_name=? where cat_id = ?";
 	private static final String DELETE = "DELETE FROM category where cat_id = ?";
 	private static final String GET_ONE = "SELECT * FROM category where cat_id = ?";

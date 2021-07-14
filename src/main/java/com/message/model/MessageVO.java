@@ -9,13 +9,13 @@ public class MessageVO implements java.io.Serializable{
 	private Integer mes_mem_id; //會員ID
 	private String mes_content; //留言內容
 	private Date mes_time; //留言時間
-	private Short mes_status; //留言狀態
+	private Integer mes_status; //留言狀態
 	
 	
 	public MessageVO() {}
 	
 	public MessageVO(Integer mes_id, Integer mes_post_id, Integer mes_mem_id, String mes_content, Date mes_time,
-			Short mes_status) {
+			Integer mes_status) {
 		this.mes_id = mes_id;
 		this.mes_post_id = mes_post_id;
 		this.mes_mem_id = mes_mem_id;
@@ -55,10 +55,10 @@ public class MessageVO implements java.io.Serializable{
 	public void setMes_time(Date mes_time) {
 		this.mes_time = mes_time;
 	}
-	public Short getMes_status() {
+	public Integer getMes_status() {
 		return mes_status;
 	}
-	public void setMes_status(Short mes_status) {
+	public void setMes_status(Integer mes_status) {
 		this.mes_status = mes_status;
 	}
 	@Override

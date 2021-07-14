@@ -22,7 +22,7 @@ public class PostTagRefService {
 	
 	
 	//由FK 文章ID找PK
-	public List<PostTagRefVO> findBy_PTR_Post_Id(Integer ptr_post_id) {
+	public List<PostTagRefJoinVO> findBy_PTR_Post_Id(Integer ptr_post_id) {
 		return dao.findBy_PTR_Post_Id(ptr_post_id);
 	}
 	

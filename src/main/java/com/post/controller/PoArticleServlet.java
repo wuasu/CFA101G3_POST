@@ -50,12 +50,12 @@ public class PoArticleServlet extends HttpServlet {
 		List<String> errorMsgs = new LinkedList<>();
 		ObjectMapper mapper = new ObjectMapper(); 	
 		request.setAttribute("errorMsgs",errorMsgs);
-		String postContentReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_.())]{1,25}$";
+//		String postContentReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_.())]{1,25}$";
 		
 		if(post_title == null|| post_title.length() ==0) {
 			errorMsgs.add("*請輸入標題");
-		}else if (!post_title.matches(postContentReg)) {
-			errorMsgs.add("*標題格式不正確");
+//		}else if (!post_title.matches(postContentReg)) {
+//			errorMsgs.add("*標題格式不正確");
 		}
 		
 		if (post_content == null || post_content.length() == 0) {
@@ -64,10 +64,8 @@ public class PoArticleServlet extends HttpServlet {
 		
 		// Send the use back to the form, if there were er nrors
 		if (!errorMsgs.isEmpty()) {
-
 			response.setStatus(401);
 			String Msg = mapper.writeValueAsString(errorMsgs);
-			
 			response.getWriter().print(Msg);
 			return;
 		}

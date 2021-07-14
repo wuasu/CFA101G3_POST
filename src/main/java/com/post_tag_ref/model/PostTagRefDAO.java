@@ -12,7 +12,7 @@ interface PostTagRefDAO {
 	PostTagRefVO find_One_By_PTRId(Integer ptr_id); 
 	
 	//用文章ID(FK) 反查文章標籤明細ID
-	List<PostTagRefVO> findBy_PTR_Post_Id(Integer ptr_post_id);
+	List<PostTagRefJoinVO> findBy_PTR_Post_Id(Integer ptr_post_id);
 	
 //	//獲取所有文章標籤明細ID 文章ID和標籤ID們
 //		List<PostTagRefVO> get_All();

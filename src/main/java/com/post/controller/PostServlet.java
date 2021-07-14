@@ -2,6 +2,8 @@ package com.post.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,8 +13,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.category.model.CategoryService;
+import com.category.model.CategoryVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.post.model.PostService;
+import com.post_tag_ref.model.PostTagRefService;
+import com.post_tag_ref.model.PostTagRefVO;
+import com.tag.model.TagService;
+
 
 
 @WebServlet("/post/postServlet")
@@ -34,8 +42,38 @@ public class PostServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		out.print(writeValueAsString);
 		
+		
+//		
+//		PostTagRefService postTagRefService = new PostTagRefService();
+//		Integer  ptr_post_id = Integer.parseInt(request.getParameter("ptr_post_id"));
+//		List<PostTagRefVO> postTagReflist = postTagRefService.findBy_PTR_Post_Id(ptr_post_id);
+	
+	
+//		
+//		for(int i=0; i< postTagReflist.size(); i++) {
+//			PostTagRefVO postTagRefVO = postTagReflist.get(i);
+//
+//		
+		
+//		Map map = new HashMap();
+//		map.put("list", list);
+//		Base64.Encoder encoder = Base64.getEncoder();
+//		for(int i=0; i<list.size(); i++) {
+//			WorVO vo = list.get(i);
+//			byte[] logo = vo.getWor_logo();
+//			String encodeToString = encoder.encodeToString(logo);
+//			System.out.println(encodeToString);
+//			map.put(i, encodeToString);
+//		}
+//		
+//		ObjectMapper mapper = new ObjectMapper();//創建
+//		String json = mapper.writeValueAsString(map);//轉換方法：Object轉成JSNO字串格式
+//		PrintWriter out = response.getWriter();//Servlet輸出
+//		out.print(json);
+//		
+		
+		
 	}
-
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		

@@ -31,7 +31,7 @@ public class PostDAOImpl implements PostDAO {
 	private static final String INSERT = "INSERT INTO POST (POST_TITLE, POST_CONTENT, POST_TIME, POST_CAT_ID, POST_MEM_ID) VALUES(?, ?, ?, ?, ?)";
 	private static final String UPDATE = "UPDATE POST set POST_TITLE=?, POST_CONTENT=?, POST_TIME=?, POST_CAT_ID=?, POST_MEM_ID=?, POST_STATUS=?  where post_id = ?";
 	private static final String DELETE = "DELETE FROM POST where POST_ID = ?";
-	private static final String GET_ONE_POSTTITLE = "SELECT POST_TITLE FROM POST where POST_ID = ?";
+	private static final String GET_BY_POST_ID = "select p.POST_ID,p.POST_TITLE,p.POST_CONTENT,p.POST_TIME, c.CAT_NAME,m.MEM_NAME,m.MEM_HEADSHOT,p.POST_STATUS from MEMBER m join POST p on m.MEM_ID = p.POST_MEM_ID join CATEGORY c on p.POST_CAT_ID = c.CAT_ID where POST_ID = ? order by POST_ID";
 	private static final String GET_ALL = "SELECT * FROM POST order by POST_ID";
 	private static final String UPDATE_POST_STATUS = "UPDATE POST set POST_STATUS=0 where POST_ID= ?"; // 0隱藏
 	private static final String GET_POST = "select p.POST_ID,p.POST_TITLE,p.POST_CONTENT,p.POST_TIME, c.CAT_NAME,m.MEM_NAME,m.MEM_HEADSHOT,p.POST_STATUS from MEMBER m join POST p on m.MEM_ID = p.POST_MEM_ID join CATEGORY c on p.POST_CAT_ID = c.CAT_ID order by POST_ID";
@@ -182,26 +182,33 @@ public class PostDAOImpl implements PostDAO {
 		}
 	}
 
-	public PostVO findByPostId(Integer post_id) {
-		PostVO post = null;
+	//用post_id抓一則文章資訊(join版本)
+	public Map findByPostId(Integer post_id) {
+		Map map = null;
+		PostVO postVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-//		 GET_ONE = "SELECT POST_TITLE FROM POST where POST_ID = ?"
+//	GET_BY_POST_ID = "select p.POST_ID,p.POST_TITLE,p.POST_CONTENT,p.POST_TIME, "
+//	+ "c.CAT_NAME,m.MEM_NAME,m.MEM_HEADSHOT,p.POST_STATUS from MEMBER m "
+//	+ "join POST p on m.MEM_ID = p.POST_MEM_ID join CATEGORY c on p.POST_CAT_ID = c.CAT_ID "
+//	+ "where POST_ID = ? order by POST_ID";
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(GET_ONE_POSTTITLE);
-
+			pstmt = con.prepareStatement(GET_BY_POST_ID);
 			pstmt.setInt(1, post_id);
-
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-
-				post = new PostVO();
-				post.setPost_id(rs.getInt("post_id"));
-				post.setPost_title(rs.getString("post_title"));
-
+				map = new HashMap();
+				map.put("POST_ID", rs.getInt("post_id"));
+				map.put("POST_TITLE", rs.getString("post_title"));
+				map.put("POST_CONTENT", rs.getString("post_content"));
+				map.put("POST_TIME", rs.getDate("post_time"));
+				map.put("CAT_NAME", rs.getString("cat_name"));
+				map.put("MEM_NAME", rs.getString("mem_name"));
+				map.put("MEM_HEADSHOT", rs.getBytes("mem_headshot"));
+				map.put("POST_STATUS", rs.getInt("post_status"));
 			}
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -228,8 +235,11 @@ public class PostDAOImpl implements PostDAO {
 				}
 			}
 		}
-		return post;
+		return map;
 	}
+	
+	
+	
 
 	public List<PostVO> getAll() {
 		List<PostVO> list = new ArrayList<PostVO>();
@@ -246,8 +256,7 @@ public class PostDAOImpl implements PostDAO {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-//	GET_ALL = "SELECT POST_TITLE, POST_CONTENT, POST_TIME,"
-//	+ " POST_CAT_ID, POST_MEM_ID, POST_STATUS, FROM POST order by POST_ID";		
+//	GET_ALL = "SELECT * FROM POST order by POST_ID";		
 				post = new PostVO();
 				post.setPost_id(rs.getInt("post_id"));
 				post.setPost_title(rs.getString("post_title"));
@@ -327,13 +336,11 @@ public class PostDAOImpl implements PostDAO {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-
 		try {
-
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_POST);
 			rs = pstmt.executeQuery();
-
+//GET_POST = "select p.POST_ID,p.POST_TITLE,p.POST_CONTENT,p.POST_TIME, c.CAT_NAME,m.MEM_NAME,m.MEM_HEADSHOT,p.POST_STATUS from MEMBER m join POST p on m.MEM_ID = p.POST_MEM_ID join CATEGORY c on p.POST_CAT_ID = c.CAT_ID order by POST_ID";
 			while (rs.next()) {
 				Map map = new HashMap();
 				map.put("POST_ID", rs.getInt("post_id"));
@@ -343,7 +350,7 @@ public class PostDAOImpl implements PostDAO {
 				map.put("CAT_NAME", rs.getString("cat_name"));
 				map.put("MEM_NAME", rs.getString("mem_name"));
 				map.put("MEM_HEADSHOT", rs.getBytes("mem_headshot"));
-				map.put("POST_STATUS", rs.getShort("post_status"));
+				map.put("POST_STATUS", rs.getInt("post_status"));
 				list.add(map);
 			}
 		} catch (SQLException e) {

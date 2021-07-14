@@ -1,11 +1,15 @@
 package com.message.model;
 
+import java.util.List;
 
 interface MessageDAO {
-          int insert(MessageVO messageReport);
-       
-          void findByMrepID(Integer mes_id);
-       
-          void updateMesStatus(MessageVO messageStatus);
-       
+	// 新增留言
+	void insert(MessageVO messageVO);
+	// 修改留言狀態
+	void updateMesStatus(MessageVO messageVO);
+
+	MessageVO findOneByMesID(Integer mes_id);
+
+	// 用文章ID找底下的留言們
+	List<MessageVO> getBy_mes_post_id(Integer mes_post_id);
 }

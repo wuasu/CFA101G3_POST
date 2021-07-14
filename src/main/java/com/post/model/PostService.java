@@ -32,7 +32,7 @@ public class PostService {
 		dao.delete(post_id);
 	}
 	
-	public PostVO findByPostId(Integer post_id) {
+	public Map findByPostId(Integer post_id) {
 		return dao.findByPostId(post_id);
 	}
 	
