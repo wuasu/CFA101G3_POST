@@ -7,5 +7,8 @@ interface CategoryDAO {
           void update(CategoryVO category);
           void delete(Integer cat_id);
           CategoryVO findByCatId(Integer cat_id);       
-          List<CategoryVO> getAll();       
+          List<CategoryVO> getAll();     
+      	//查詢總共幾篇文章(Join post表格)
+      	Integer getPostCountByCatId(Integer cat_id);
+          
 }

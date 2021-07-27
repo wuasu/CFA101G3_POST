@@ -43,11 +43,10 @@ public class PostServlet extends HttpServlet {
 		out.print(writeValueAsString);
 		
 		
-//		
+	
 //		PostTagRefService postTagRefService = new PostTagRefService();
 //		Integer  ptr_post_id = Integer.parseInt(request.getParameter("ptr_post_id"));
 //		List<PostTagRefVO> postTagReflist = postTagRefService.findBy_PTR_Post_Id(ptr_post_id);
-	
 	
 //		
 //		for(int i=0; i< postTagReflist.size(); i++) {
@@ -55,22 +54,6 @@ public class PostServlet extends HttpServlet {
 //
 //		
 		
-//		Map map = new HashMap();
-//		map.put("list", list);
-//		Base64.Encoder encoder = Base64.getEncoder();
-//		for(int i=0; i<list.size(); i++) {
-//			WorVO vo = list.get(i);
-//			byte[] logo = vo.getWor_logo();
-//			String encodeToString = encoder.encodeToString(logo);
-//			System.out.println(encodeToString);
-//			map.put(i, encodeToString);
-//		}
-//		
-//		ObjectMapper mapper = new ObjectMapper();//創建
-//		String json = mapper.writeValueAsString(map);//轉換方法：Object轉成JSNO字串格式
-//		PrintWriter out = response.getWriter();//Servlet輸出
-//		out.print(json);
-//		
 		
 		
 	}

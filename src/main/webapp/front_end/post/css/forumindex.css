@@ -1,11 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Noto+Sans+TC:wght@100;300;400;500;700;900&family=Sarabun:ital,wght@0,100;0,200;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600&display=swap');
-
 /* 
-font-family: 'Noto Sans TC', sans-serif  思源黑體 包含中英文;
-font-family: 'Sarabun', sans-serif;   英文正體字  
-font-family: 'Caveat', cursive; 英文藝術字
+font-family: 'Noto Sans TC', sans-serif  æ€æºé»‘é«” åŒ…å«ä¸­è‹±æ–‡;
+font-family: 'Sarabun', sans-serif;   è‹±æ–‡æ­£é«”å­—  
+font-family: 'Caveat', cursive; è‹±æ–‡è—è¡“å­—
 */ 
-
 
 /* .container-fluid{
      padding: 0;
@@ -30,7 +28,7 @@ body{
 .topArticle{
     width: 98%;
     height: 360px;
-    border:1px solid #E0E0E0FF;
+    /* border:1px solid rgb(194, 9, 9); */
     display: flex;
     justify-content: space-between;
 }
@@ -38,9 +36,9 @@ body{
 .imgArea{
     width: 450px;
     height: 300px;
-    border:1px solid #E0E0E0FF;
+    /* border:1px solid #E0E0E0FF; */
     margin-left: 25px;
-    margin-top: 5px;
+    margin-top: 15px;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -48,7 +46,6 @@ body{
 }
 
 .pic{
-
     transition: all 0.5s;
     position: relative;
 }
@@ -60,15 +57,43 @@ body{
 
 .article{
     width: 535px;
-    height: 320px;
-    border:1px solid rgb(214, 236, 213);
+    height: 300px;
     margin-right: 15px;
-    margin-top: 15px;
+    margin-top: 20px;
     margin-left: 10px;
     display: inline-block;
+    /* border: #D5CB8E 1px solid; */
+    position: relative;
+}
+
+/* more小框 */
+.more{
+    position: absolute;
+    bottom: 3px;
+    right: 0;
+    width: 55px;
+    height: 24px;
+    border: 1px solid #ababab;
+    border-radius: 3px;
+    color: #827d79;
+    font: 15px/19px 'Noto Sans TC', sans-serif;
+    text-align: center;
+    text-decoration: none;
+}
+
+.more:hover{
+     color: #000000;
+    border: 2px solid #000000;
+}
+
+hr.hr2{
+    border:1px solid #C5DADE; 
+width: 95%;
+margin-left: 20px;
 }
 
 .title{
+    width: 535px;
     font-size: 18px;
     font-weight: 600;
     color:  #FF80A2;
@@ -92,30 +117,46 @@ body{
 }
 
 
-/* .catbox{
-    height: 70px;
+.catbox{
+    height: 50px;
     width: 68%;
     margin-bottom: 2px;
     border-radius:6px;
-    margin-left: 25px; */
+    margin-left: 25px; 
+    background-color: rgb(245, 245, 245);
+    
+}
 
+.category{
+ display: flex;
+    justify-content:center;
+  
+}
 
 .category  ul{
     display: flex;
-    justify-content: left;
-    padding: 15px 0px 0px 50px;
+ text-align: center;
+   align-items: center;
+    /* align-items: center; */
+   
+    padding: 13px 0px 0px 0px;
 }
 
 .category  ul  li{
  padding: 0.3rem 0.6rem;
+  
 }
 
 .category  ul  li a{
     color: #5a4e51 ;
+    text-decoration: none;
+}
+
+.category  ul  li a:hover{
+   font-weight: 400;
 }
 
 
-/*討論區文章*/
 .postone{
     width: 90%;
     height: 300px;
@@ -218,7 +259,7 @@ line-height: 20px;
 
 .inner_count{
 position: absolute;
-bottom:10px;
+bottom:20px;
 }
 
 
@@ -242,14 +283,12 @@ bottom:10px;
 
 hr.left1 {
     margin: 140px  0px 0px 0px;
-	border:2px solid #ffb3b3; 
+	border:1px solid #ffb3b3; 
     opacity: 0.7; 
     width: 95%;
 	position: absolute;
     bottom:1px;
 }
-
-
 
 .big_left{
      width: 76%;
@@ -257,9 +296,64 @@ hr.left1 {
      /* border: rgb(78, 61, 78) 1px solid; */
 }
 
+.page-area{
+    display: block;
+    /* border:2px solid #3f8a14;  */
+    margin: 30px 0 30px 0;
+    align-items: baseline;
+}
 
-/*******右邊sidebar區**********/
 
+.page{
+    margin-left: 200px;
+    display: block;
+    /* border:2px solid #f0ec2a;  */
+  
+}
+
+
+.page a{
+    /* font-size: 18px;
+    margin: 0 10px 0 0; */
+    color: black;
+    /* float: left; */
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 5px;
+      height: 8px;
+   
+}
+
+
+/* 被點到的頁數會顯示粉紅底色 */
+.page a.active{
+    background-color: #FF80A2;
+    color: white;
+    border-radius: 5px;
+}
+
+
+/* 頁數被滑過 且非被點選的頁數 會顯示灰底 */
+.page a:hover:not(.active) {background-color: #ddd;}
+
+
+
+
+.totalPage{
+    font-size: 16px;
+    display: block;
+    /* border: 2px solid #5834f7; */
+    margin-left: 305px;
+    margin-top: 20px;
+}
+
+
+
+
+
+
+
+/* 右側sidebar */
 .big_right{
     width: 24%;
     height: 5000px;
@@ -268,7 +362,6 @@ hr.left1 {
     /* vertical-align: baseline; */
     /* position: sticky; */
 }
-
 
 .sidebar{
         background-color: #FADCDA;
@@ -280,6 +373,19 @@ hr.left1 {
 
 .ad img{
     margin-top: 10px;
+}
+
+/* 右側 活動快訊區 */
+.hot-articles-area.news{
+ margin-top: 100px;
+}
+
+.ad2{
+    margin-top: 20px;
+}
+
+.ad2 ul li{
+    margin-top: 20px;
 }
 
 .goto_post{
@@ -294,9 +400,9 @@ hr.left1 {
     margin-bottom: 15px;
     color: rgba(0,0,0,.8);
 }
-
+/* 解疑惑｜找出口｜聊生活 */
 .goto_post .text p {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 500;
     margin-bottom: 8px;
 }
@@ -326,26 +432,25 @@ hr.left1 {
 }
 
 
-.hot-articles{
+/* 熱門文章*/
+.hot-articles-area{
     margin-top: 50px;
     width: 96%;
     display: inline-block;
     position: relative;
-      text-align: center;
+    text-align: left;
 }
 
-
-.hot-articles span{
+.hot-articles-top span{
     float: left;
     padding-right: 5px;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 500;
     /* margin-bottom: 30px; */
 }
-.hot-articles div{
+.hot-articles-div{
     height: 8px;
 }
-
 
 
 .right1 {
@@ -353,8 +458,108 @@ hr.left1 {
   width: 280px;
   position: absolute;
   text-align: center;
-
 }
+
+.hot-articles-box{
+    width: 280px;
+    display: inline-block;
+    text-align: center;
+    /* border: rgb(29, 173, 24) 1px solid; */
+}
+
+
+.hot-articles{ /* æ­¤ç‚ºul */
+    display: inline-block;
+    width: 280px;/* è¨˜å¾—åœ¨ulè¦è¨­å®šå¯¬åº¦ */
+    margin-top: 15px;
+    text-align: left;
+    line-height: 30px;
+}
+
+.hot-articles a{
+    text-decoration: none;
+    color: #000000;
+    transition: 0.2s;
+}
+
+.hot-articles a:hover{
+      color:  #FF80A2;
+     /* color:  #FF80A2; */
+    cursor: pointer;
+}
+
+
+
+
+.hot-articles li{
+    overflow: hidden; 
+    text-overflow: ellipsis;  /* 單行溢出的設定... */
+    white-space: nowrap; /* 強制不斷行 */
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 30px;
+}
+
+.swiper-slide {
+    flex-shrink: 0; 
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition-property: transform;
+    display: flex;
+    z-index: 1;
+}
+.swiper-pagination {
+    position: absolute;
+    padding-left: 100px; 
+    transition: .3s opacity;
+    transform: translate3d(0,0,0);
+    z-index: 1;
+}
+
+
+/* 我要發文 掃光特效版 */
+/* .wantpost {
+    width: 200px;
+    background-color: #FF80A2;
+    position: relative;
+    margin: 18px 0 0 5px;
+    overflow: hidden;
+    transition-duration: 20s;/**动画时间**/
+    /* display: inline-block;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 5px;
+    line-height: 45px;
+    color: #FFF;
+    } */
+    /* .wantpost:before {
+        content: "";
+        position: absolute;
+        width: 2000px;
+        height: 90px; *光标的宽度，可根据实际调整*
+        background-image: linear-gradient(to bottom,transparent,rgba(255,255,255,.3),transparent);
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        -webkit-animation: searchLights 1s ease-in 1s infinite;
+        -o-animation: searchLights 1s ease-in 1s infinite;
+        animation: searchLights 5s ease-in 1s infinite; 第一个数字参数控制扫光速度，数字越大越慢
+    }
+    @keyframes searchLights {
+        0% {
+            left: -2000px;
+            top: -800px;
+        }
+        100% {
+            left: -160px;
+            top: 900px;
+        }
+    } */ 
 
 
 

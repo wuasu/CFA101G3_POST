@@ -32,6 +32,7 @@ public  class CategoryDAOImpl implements CategoryDAO {
 	private static final String DELETE = "DELETE FROM category where cat_id = ?";
 	private static final String GET_ONE = "SELECT * FROM category where cat_id = ?";
 	private static final String GET_ALL = "SELECT * FROM category order by cat_id";
+	private static final String GET_POST_COUNT_BY_CAT_ID ="select count(*) from CATEGORY c join POST p on c.CAT_ID = p.POST_CAT_ID  where CAT_ID =?";
 
 	public void insert(CategoryVO category) {
 		Connection con = null;
@@ -238,5 +239,50 @@ public  class CategoryDAOImpl implements CategoryDAO {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public Integer getPostCountByCatId(Integer cat_id) {
+		    Integer ThisPostCount =null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+//			GET_POST_COUNT_BY_CAT_ID ="select count(*) from CATEGORY c "
+//			+ "join POST p on c.CAT_ID = p.POST_CAT_ID  where CAT_ID =?";
+			try {
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(GET_POST_COUNT_BY_CAT_ID);
+				pstmt.setInt(1, cat_id);
+				rs = pstmt.executeQuery();
+				rs.next();
+				ThisPostCount =  rs.getInt(1);
+
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. " + se.getMessage());
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			
+			return ThisPostCount;
+		}
 	}	
-}

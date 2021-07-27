@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>article-message</title>
+    <link rel="icon" href="images/logo-icon01.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/all.css">
     <link rel="stylesheet" href="css/header.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -47,7 +48,6 @@
 
             <div class="category">
                 <ul id="category-data">
-                    <li><a href="#">所有話題<span>(258)</span></a></li>
                 </ul>
             </div>
 
@@ -60,22 +60,18 @@
                 <span>
                     我要回應
                 </span>
-                <textarea cols="80" class="message-area" id="descri_main" name="descri_main" maxlength="500"
-                    placeholder="我要回應..."></textarea>
+                <textarea cols="80" class="message-area" id="message-area" name="message-area" maxlength="255"
+                    placeholder="輸入留言(250字)..."></textarea>
+                <!--textarea要用.val()來取值 可編輯的div用.html()取值-->
+                <span id="span1"></span>
                 <div class="reply-box">
-                    <span style="color:green;display: none;" id="reply_ok">留言成功</span>
-                    <span style="color:rgb(156, 39, 39);display: none;" id="reply_error">內容不能空白</span>
                     <div class="btn-box">
                         <input type="button" class="reply_btn" value="發送" id="reply_btn">
                     </div>
-                    <!-- <br style="clear:both;"> -->
                 </div>
             </div>
 
-            <div class="messageSum">
-                <span>
-                    共15則回應
-                </span>
+            <div class="messageSum" id="messageSum">
             </div>
 
 
@@ -83,7 +79,7 @@
             <!--其他會員的留言-->
             <div class="all-message">
                 <div class="one-message" id="one-message">
-                    <div class="message-top">
+                    <!-- <div class="message-top">
                         <div class="left_author_pic">
                             <img src="images/animal_panda.png" width="40">
                         </div>
@@ -99,7 +95,7 @@
                     <div class="inner-message" id="inner-message">
                         我是留言我是留言
                         <hr class="left1">
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -121,16 +117,20 @@
                     <div class="text">
                         <p>解疑惑｜找出口｜聊生活 </p><span>關於結婚的大小事，不知道能問誰？沒人聽你說？歡迎點擊【我想發文】即可開啟話題 </span>
                     </div>
-                    <a href="/CFA101G3/front_end/post/po_article.html" id="">
+                    <a href="/CFA101G3/front_end/post/po_article.html" id="" target="_blank">
                         我想發文</a>
                 </section>
+                <div class="hot-articles-area">
+                    <div class="hot-articles-top" id="hot-articles-top">
+                        <span>熱門文章</span><span>HOT ARTICLES</span>
+                        <div class="hot-articles-div"></div>
+                        <hr class="right1">
+                    </div>
+                </div>
 
-                <section class="hot-articles">
-                    <span>熱門文章</span><span>HOT ARTICLES</span>
-                    <div></div>
-                    <hr class="right1">
-                </section>
+                <ul class="hot-articles" id="hot-articles">
 
+                </ul>
 
 
 
@@ -140,21 +140,37 @@
     </div>
     <footer></footer>
     <script>
-        $.ajax({
-            type: "post",
-            url: "../../category/categoryServlet",
-            dataType: 'json',
-            success: function (result) {
-                for (let i = 0; i < result.length; i++) {
-                    let element = result[i].cat_name;
-                    let template = `<li><a href="#">${element}<span>(258)</span></a></li>`;
-                    $("#category-data").append(template);
+
+
+        //頁面載入即顯示熱門文章
+        hotPost();
+
+        //獲取熱門文章
+        function hotPost() {
+            $.ajax({
+                type: "post",
+                url: "../../post/postActionServlet",
+                data: {
+                    "action": "hotPost",
+                },
+                dataType: "json",
+                success: function (response) {
+                    if (response.length < 5) {
+                        for (let key = 0; key < response.length; key++) {
+                            let tmp = `<a href="show-article-message.html?post_id=${response[key].MES_POST_ID}"><li>${response[key].CAT_NAME}//${response[key].POST_TITLE}</li></a>`;
+                            $("#hot-articles").append(tmp);
+                        }
+                    } else {
+                        for (let key = 0; key < 6; key++) {
+                            let tmp = `<a href="show-article-message.html?post_id=${response[key].MES_POST_ID}"><li>${response[key].CAT_NAME}//${response[key].POST_TITLE}</li></a>`;
+                            $("#hot-articles").append(tmp);
+                        }
+                    }
                 }
-            }
-        });
+            });
+        }
 
-
-
+        //用postid抓出該則文章
         let urlParams = new URLSearchParams(window.location.search);
         let param = urlParams.get("post_id");
         console.log(param);
@@ -186,12 +202,10 @@
 
                      <div class="post-content">
                          <span class="postone_cat">${result.CAT_NAME}</span>
-                         <span>/ / </span>
+                         <span>// </span>
 
                          <span class="post-title">${result.POST_TITLE}</span>
                           <div class="inner_count" id="inner_count">
-                             ‧ 回覆 <span> 10 </span>
-                             ‧ 瀏覽 <span> 339 </span>
                          </div>
 
 
@@ -209,7 +223,7 @@
                     $("#post-container").append(template);
                 }
             });
-
+            //用postid得到該則文章的標籤們
             $.ajax({
                 type: "post",
                 url: "../../post/showOnePostBypostIdServlet",
@@ -219,6 +233,7 @@
                     "post_id": param,
                     "action": "getTag"
                 },
+                // result是list 用for of取值
                 success: function (result) {
                     console.log(result)
                     for (const tags of result) {
@@ -227,29 +242,78 @@
                         }
                     }
                 }
-            })
+            });
+
+
+            //用postid抓出留言內容
+            $.ajax({
+                type: "post",
+                url: "../../message/showMessageServlet",
+                dataType: 'json',
+                data: {
+                    "mes_post_id": param
+                },
+                success: function (result) {
+                    console.log(result);
+                    for (let i = 0; i < result.length; i++) {
+                        let template = `<div class="message-top">
+                        <div class="left_author_pic">
+                            <img src="data:image/*;base64,${result[i].MEM_HEADSHOT}" width="40">
+                        </div>
+
+                        <div class="right_info">
+                            <ul>
+                                <li class="mem_author">${result[i].MEM_NAME}</li>
+                                <li class="time">${result[i].MES_TIME}</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="inner-message" id="inner-message">
+                         ${result[i].MES_CONTENT}
+                        <hr class="left1">
+                    </div>`;
+                        $("#one-message").append(template);
+                    }
+                    $("#messageSum").text("共" + result.length + "則回應");
+                }
+            });
+
+            // 按下留言按鈕
+            $("#reply_btn").on('click', function () {
+                let message = $("#message-area").val();
+                //當遇到兩個空白轉換成兩個   是因有其他考量,如果只是純文字資料沒有其他標籤符號則轉換一個空白就行了
+                message2 = message.replace(/  /g, "  ");
+                //textarea換行轉成<br>
+                message2 = message2.replace(/\n/g, "<br>");
+
+                $.ajax({
+                    url: "../../message/poMessageServlet",
+                    type: "POST",
+                    data: { //把data送進servlet
+                        "mes_post_id": param,
+                        "mes_content": message2
+                    },
+                    success: function (result) {
+                        alert(result);
+                        window.location.reload();
+                    }
+                    //,
+                    // error: function (data) {
+                    //     $("#errorMsg").html("");
+                    //     console.log(data.responseText);
+                    //     let errorMsg = JSON.parse(data.responseText);
+                    //     for (let i = 0; i < errorMsg.length; i++) {
+                    //         $("#errorMsg").append(errorMsg[i] + "<br>");
+                    //     }
+                    //     alert("文章發佈失敗");
+                    // }
+
+                });
+            });
+
+
         }
-
-
-
-
-
-
-
-
-
-
-
-        // $.ajax({
-        //     type: "post",
-        //     url: "../../message/showMessageServlet",
-        //     dataType: 'json',
-        //     data: { "mes_post_id": mes_post_id },
-        //     success: function (result) {
-        //         let template = `${result[0].mes_post_name}`;
-        //         $("#inner-message").append(template);
-        //     }
-        // });
 
     </script>
 

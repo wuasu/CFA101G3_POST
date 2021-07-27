@@ -20,7 +20,10 @@ public class CategoryService {
 	public List<CategoryVO> getAll() {
 		return dao.getAll();
 	}
-
+	public Integer getPostCountByCatId(Integer cat_id) {
+		return dao.getPostCountByCatId(cat_id);
+		
+	
+	}
 
 }
-

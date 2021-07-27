@@ -43,8 +43,8 @@
         <div class="po-container" id="po-container">
             <div class="content">
                 <div class="po-top">
-                    <p>開話題</p>
-                    <hr>
+                    <p>開話題 <i class="fas fa-comments"></i></p>
+                    <hr class="hr1">
                 </div>
 
                 <div class="inner-mem">
@@ -69,7 +69,7 @@
                             <option value="3">我要靠北</option>
                             <option value="4">準媽咪</option>
                             <option value="5">購便宜</option>
-                            <!-- <option value="6">官方文章</option> -->
+                            <option value="6">官方文章</option>
                             <option value="7">其它閒聊</option>
                         </select>
                     </div>
@@ -84,12 +84,14 @@
 
 
                 <!--輸入標籤的地方  限定只能打10個字 -->
-                <input type="text" id="tagInput" maxlength="10" placeholder="請輸入標籤(非必填)">
+                <div class="tag-box">
+                    <input type="text" class="tagInput form-control" id="tagInput" maxlength="10"
+                        placeholder="請輸入標籤(非必填)">
 
-                <button type="button" class="btn btn-secondary tag-input-btn" id="tagBtn">加入此標籤</button>
-                <!--生成的Tag出現在此列 -->
-                <div id="tags"></div>
-
+                    <button type="button" class="btn btn-danger tag-input-btn tagBtn" id="tagBtn">加入此標籤</button>
+                    <!--生成的Tag出現在此列 -->
+                    <div id="tags"></div>
+                </div>
 
                 <div id="errorMsg"></div>
                 <div id="editor2" class="editor2 form-control" contenteditable="true">
@@ -97,7 +99,7 @@
                 </div>
 
 
-                <input type="file" name="file" id="file" accept="image/gif, image/jpeg, image/png">
+                <input type="file" name="file" id="file" class="file" accept="image/gif, image/jpeg, image/png">
 
 
                 <div class="inner-btn">
@@ -158,9 +160,9 @@
 
 
 
-
+        // 按下發佈文章的按鈕
         $("#post-button").on('click', function () {
-            let selectprofession = $("#select-profession").val();
+            let selectprofession = $("#select-profession").val();//取下拉選單的值
             let title = $("#title").val();//取title的值
             let editor2 = $("#editor2").html();
             let tags = tmp.toString();
@@ -176,6 +178,7 @@
                 },
                 success: function (result) {
                     alert(result);
+                    window.location.href = 'forumindex.html';
                 },
                 error: function (data) {
                     $("#errorMsg").html("");
@@ -188,7 +191,6 @@
                     }
                     alert("文章發佈失敗");
                 }
-
             });
         });
 
@@ -200,6 +202,8 @@
             console.log(reg.test(tagvalue));
             return reg.test(tagvalue);
         }
+
+        //監聽按下鍵盤後插入tag
         // $('#tagInput').on('keydown', function (e) {
         //     if (e.keyCode == 13) { //keycode 13 = Enter
         //         let tagValue = $('#tagInput').val().trim();
@@ -235,17 +239,19 @@
             let tagValue = $('#tagInput').val().trim();
             if (!checkTagType(tagValue)) {
                 alert("請輸入中文、數字或英文");
-                //輸入非法字元，清空輸入框
+                //輸入非法字元後，清空輸入框
                 $("#tagInput").val("");
                 return;
             }
+            // `<button type="button" class="btn btn-primary">
+            //   <a class="badge bg-danger">X</a>
             if (tagValue != "") {
                 tmp.push(tagValue);
                 console.log(tmp);
                 let tagTemp =
-                    `<button type="button" class="btn btn-primary">
+                    `<button type="button" class="btn btn-secondary btn-sm">
                                 <span>${tagValue}</span>
-                                <a class="badge bg-danger">X</a>
+                                <a class="badge bg-secondary">X</a>
                             </button>`
                 $('#tags').append(tagTemp);
                 $('#tagInput').val("");
@@ -254,7 +260,7 @@
 
         //刪除tag
         $('#tags').on('click', 'a', function (e) {
-            //e.currentTarget 指的是註冊的對象'a' 如果'a'底下有其他<span>且要選擇他span 要用e.target
+            //e.currentTarget 指的是註冊的對象'a' 如果'a'底下有其他<span>且要選擇他的span 要用e.target
             e.currentTarget.closest("button").remove();
             let tmpValue = $(e.currentTarget).siblings('span').html();
             tmp.forEach(function (item, index, object) {

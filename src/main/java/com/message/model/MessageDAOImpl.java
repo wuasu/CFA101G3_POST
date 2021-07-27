@@ -37,8 +37,9 @@ public class MessageDAOImpl implements MessageDAO {
 	private static final String getBy_mes_post_id = "select s.MES_ID,s.MES_POST_ID,s.MES_MEM_ID,m.MEM_NAME,s.MES_TIME,s.MES_CONTENT,m.MEM_HEADSHOT,\n"
 			+ "s.MES_STATUS from MEMBER m join MESSAGE s on m.MEM_ID = s.MES_MEM_ID where MES_POST_ID=? order by MES_ID desc";
 	private static final String FIND_ONE_BY_MES_ID = "SELECT * FROM MESSAGE where MES_ID = ?";
+    private static final String MESSAGE_COUNT_SORT = "SELECT MES_POST_ID,count(*),CAT_NAME,POST_TITLE from message join POST on MES_POST_ID = POST_ID join CATEGORY on POST_CAT_ID = CAT_ID group by mes_post_id  order by count(*) desc;";
 	
-	@Override
+    @Override
 	public void insert(MessageVO messageVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -122,7 +123,6 @@ public class MessageDAOImpl implements MessageDAO {
 
 	@Override
 	public MessageVO findOneByMesID(Integer mes_id) {
-		
 		MessageVO messageVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -194,12 +194,12 @@ public class MessageDAOImpl implements MessageDAO {
 				Map map = new HashMap();
 				map.put("MES_ID", rs.getInt("mes_id"));
 				map.put("MES_POST_ID", rs.getInt("mes_post_id"));
-				map.put("MES_MEM_ID", rs.getInt("post_content"));
-				map.put("MEM_NAME", rs.getString("post_content"));
-				map.put("MES_TIME", rs.getDate("post_time"));
-				map.put("MES_CONTENT", rs.getString("cat_name"));
-				map.put("MEM_HEADSHOT", rs.getBytes("mem_name"));
-				map.put("MES_STATUS", rs.getInt("post_status"));
+				map.put("MES_MEM_ID", rs.getInt("mes_mem_id"));
+				map.put("MEM_NAME", rs.getString("mem_name"));
+				map.put("MES_TIME", rs.getDate("mes_time"));
+				map.put("MES_CONTENT", rs.getString("mes_content"));
+				map.put("MEM_HEADSHOT", rs.getBytes("mem_headshot"));
+				map.put("MES_STATUS", rs.getInt("mes_status"));
 				list.add(map);
 			}
 		} catch (SQLException e) {
@@ -229,4 +229,64 @@ public class MessageDAOImpl implements MessageDAO {
 		}
 		return list;
 	}
+
+	
+	
+	
+//mes join post&category表格 以文章的留言數做排序
+	@Override
+	public List message_count_sort() {
+		List list = new ArrayList();
+		MessageVO messageVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+//MESSAGE_COUNT_SORT = "SELECT MES_POST_ID,count(*),CAT_NAME,POST_TITLE from message 
+//join POST on MES_POST_ID = POST_ID join CATEGORY on POST_CAT_ID = CAT_ID 
+//group by mes_post_id  order by count(*) desc;";
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(MESSAGE_COUNT_SORT);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				Map map = new HashMap();
+				map.put("MES_POST_ID", rs.getInt("mes_post_id"));
+				map.put("MES_COUNT", rs.getInt("count(*)")); //?
+				map.put("CAT_NAME", rs.getString("cat_name"));
+				map.put("POST_TITLE", rs.getString("post_title"));
+				list.add(map);
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+
+
+
 }

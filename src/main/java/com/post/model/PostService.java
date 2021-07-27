@@ -3,7 +3,6 @@ package com.post.model;
 import java.sql.Date;
 import java.util.List;
 import java.util.Map;
-
 import com.category.model.CategoryVO;
 import com.tag.model.TagVO;
 
@@ -36,6 +35,11 @@ public class PostService {
 		return dao.findByPostId(post_id);
 	}
 	
+	public List findByCatId(Integer cat_id) {
+		return dao.findByCatId(cat_id);
+	}
+	
+	
 	public List<PostVO> getAll(){
 		return dao.getAll();
 	}
@@ -46,7 +50,22 @@ public class PostService {
 	
 	public List getPost(){
 		return dao.getPost();
-	
 	}
 	
+	public PostPageVO findByPage(Integer currentPage, Integer rows) {
+		PostPageVO postPageVO = new PostPageVO();
+		postPageVO.setCurrentPage(currentPage);
+		postPageVO.setRows(rows);
+		//查詢所有文章數
+		Integer totalCount = dao.findTotalCount();
+		postPageVO.setTotalCount(totalCount);
+		//當頁的開始
+		Integer start = (currentPage - 1)* rows;
+		List list = dao.findByPage(start, rows);
+		postPageVO.setList(list);
+		//總頁數
+		Integer totalPage= (totalCount % rows) == 0 ? totalCount/rows : (totalCount/rows)+1;
+		postPageVO.setTotalPage(totalPage);
+		return postPageVO;
+	}
 }

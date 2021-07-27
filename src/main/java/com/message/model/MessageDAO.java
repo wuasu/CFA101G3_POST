@@ -12,4 +12,7 @@ interface MessageDAO {
 
 	// 用文章ID找底下的留言們
 	List<MessageVO> getBy_mes_post_id(Integer mes_post_id);
+	
+	//依文章留言數排序
+	List message_count_sort();
 }

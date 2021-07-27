@@ -11,6 +11,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import com.post_tag_ref.model.PostTagRefDAOImpl;
+import com.post_tag_ref.model.PostTagRefJoinVO;
 import com.post_tag_ref.model.PostTagRefVO;
 import com.tag.model.TagService;
 import com.tag.model.TagVO;
@@ -32,10 +33,20 @@ public class PostDAOImpl implements PostDAO {
 	private static final String UPDATE = "UPDATE POST set POST_TITLE=?, POST_CONTENT=?, POST_TIME=?, POST_CAT_ID=?, POST_MEM_ID=?, POST_STATUS=?  where post_id = ?";
 	private static final String DELETE = "DELETE FROM POST where POST_ID = ?";
 	private static final String GET_BY_POST_ID = "select p.POST_ID,p.POST_TITLE,p.POST_CONTENT,p.POST_TIME, c.CAT_NAME,m.MEM_NAME,m.MEM_HEADSHOT,p.POST_STATUS from MEMBER m join POST p on m.MEM_ID = p.POST_MEM_ID join CATEGORY c on p.POST_CAT_ID = c.CAT_ID where POST_ID = ? order by POST_ID";
+	private static final String GET_BY_CAT_ID = "select p.POST_ID,p.POST_TITLE,p.POST_CONTENT,p.POST_TIME, c.CAT_ID,c.CAT_NAME,m.MEM_NAME,m.MEM_HEADSHOT,p.POST_STATUS,m.MEM_ID from MEMBER m join POST p on m.MEM_ID = p.POST_MEM_ID join CATEGORY c on p.POST_CAT_ID = c.CAT_ID where CAT_ID = ? order by POST_ID desc";
 	private static final String GET_ALL = "SELECT * FROM POST order by POST_ID";
 	private static final String UPDATE_POST_STATUS = "UPDATE POST set POST_STATUS=0 where POST_ID= ?"; // 0隱藏
+	
+	 //join版的表格要設定order by POST_ID 才會抓到最新的文章(不然會抓到最新的會員)
 	private static final String GET_POST = "select p.POST_ID,p.POST_TITLE,p.POST_CONTENT,p.POST_TIME, c.CAT_NAME,m.MEM_NAME,m.MEM_HEADSHOT,p.POST_STATUS from MEMBER m join POST p on m.MEM_ID = p.POST_MEM_ID join CATEGORY c on p.POST_CAT_ID = c.CAT_ID order by POST_ID";
-    //join版的表格要設定order by POST_ID 才會抓到最新的文章(不然會抓到最新的會員)
+ 
+	
+	//找文章總數
+	private static final String Find_Total_Count = "SELECT COUNT(*) FROM POST";
+	//當下分頁的起始 與每頁顯示的文章數
+	private static final String Find_By_Page = "select p.POST_ID,p.POST_TITLE,p.POST_CONTENT,p.POST_TIME, c.CAT_NAME,m.MEM_NAME,m.MEM_HEADSHOT,p.POST_STATUS,m.MEM_ID from MEMBER m join POST p on m.MEM_ID = p.POST_MEM_ID join CATEGORY c on p.POST_CAT_ID = c.CAT_ID order by POST_ID desc LIMIT ? , ?";
+	
+	
 	
 	public void insert(PostVO post, List<TagVO> addTag) {
 		Connection con = null;
@@ -375,6 +386,163 @@ public class PostDAOImpl implements PostDAO {
 					con.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List findByCatId(Integer cat_id) {
+		List list = new ArrayList();
+		Map map = null;
+		PostVO postVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;	
+//GET_BY_CAT_ID = "select p.POST_ID,p.POST_TITLE,p.POST_CONTENT,p.POST_TIME, c.CAT_ID,c.CAT_NAME,
+//m.MEM_NAME,m.MEM_HEADSHOT,p.POST_STATUS,m.MEM_ID from MEMBER m join POST p on m.MEM_ID = p.POST_MEM_ID 
+//join CATEGORY c on p.POST_CAT_ID = c.CAT_ID where CAT_ID = ? order by POST_ID desc";		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_BY_CAT_ID);
+			pstmt.setInt(1, cat_id);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				
+				map = new HashMap();
+				map.put("POST_ID", rs.getInt("post_id"));
+				map.put("POST_TITLE", rs.getString("post_title"));
+				map.put("POST_CONTENT", rs.getString("post_content"));
+				map.put("POST_TIME", rs.getDate("post_time"));
+				map.put("CAT_ID", rs.getInt("cat_id"));
+				map.put("CAT_NAME", rs.getString("cat_name"));
+				map.put("MEM_NAME", rs.getString("mem_name"));
+				map.put("POST_STATUS", rs.getInt("post_status"));
+				map.put("MEM_ID", rs.getInt("mem_id"));
+				list.add(map);
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public Integer findTotalCount() {;
+//		PostPageVO postPageVO  = new PostPageVO();
+	    Integer postCount =null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			//Find_Total_Count = "SELECT COUNT(*) FROM POST";	
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(Find_Total_Count);
+			rs = pstmt.executeQuery();
+			rs.next();
+			postCount =  rs.getInt(1);
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		
+		return postCount;
+	}
+
+	@Override
+	public List findByPage(Integer start, Integer rows) {
+		List list = new ArrayList();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;		
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(Find_By_Page);
+			pstmt.setInt(1,start); 
+			pstmt.setInt(2,rows ); 
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				Map map = new HashMap();
+				map.put("POST_ID", rs.getInt("post_id"));
+				map.put("POST_TITLE", rs.getString("post_title"));
+				map.put("POST_CONTENT", rs.getString("post_content"));
+				map.put("POST_TIME", rs.getDate("post_time"));
+				map.put("CAT_NAME", rs.getString("cat_name"));
+				map.put("MEM_NAME", rs.getString("mem_name"));
+				map.put("POST_STATUS", rs.getInt("post_status"));
+				map.put("MEM_ID", rs.getInt("mem_id"));
+				list.add(map);
+			}
+				
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
 				}
 			}
 		}

@@ -26,7 +26,7 @@ body{
 .category  ul{
     display: flex;
     justify-content: left;
-    padding: 15px 0px 0px 50px;
+    padding: 15px 0px 0px 30px;
 }
 
 
@@ -42,7 +42,7 @@ body{
 /*文章內容*/
 .post-content{
     width: 100%;
-     margin-left: 20px;
+     margin-left: 50px;
      border: rgba(164, 252, 3, 0.466) 1px;
 }
 
@@ -51,7 +51,7 @@ body{
     display: flex;
     margin-top: 20px;
     margin-bottom: 20px;
-    margin-left: 20px;
+    margin-left: 50px;
 }
 
 
@@ -95,26 +95,28 @@ line-height: 20px;
 
 
 
-.inner_count{
+/* .inner_count{
     margin-top: 20px;
-}
+} */
 
 .inner_tag{
     display: inline-block;
     width: 900px;
-    border: 1px solid rgb(140, 140, 145);
+    /* border: 1px solid rgb(181, 181, 182); */
     margin-top: 20px;
+    font-weight: 400;
+    color: cadetblue;
 }
 
 
 
 .inner_text{
     display: inline-block;
-    width: 900px;
+    width: 850px;
     font-weight: 400;
     /* height: 70px; */
-    border: 1px solid rgb(140, 140, 145);
-    line-height:25px;
+    /* border: 1px solid rgb(140, 140, 145); */
+    line-height:30px;
     margin-top: 10px;
     overflow: hidden;
 }
@@ -124,17 +126,17 @@ line-height: 20px;
     height: auto;
 }
 
-
+/* 我要回應 */
 .message-box{
     display: block;
     position: relative;
-    width: 900px;
+    width: 850px;
     font-weight: 400;
     /* height: 200px; */
-    border: 1px solid rgb(164, 164, 240);
+    /* border: 1px solid rgb(164, 164, 240); */
     line-height:25px;
     margin-top: 30px;
-    margin-left: 20px;
+    margin-left: 50px;
        
 }
 
@@ -152,9 +154,22 @@ line-height: 20px;
     border-radius: 5px;
 }
 
+
+.message-area{
+    width:100%;
+    border:0;
+    white-space: pre;
+    white-space: pre-wrap;
+    /* word-wrap:break-word;
+    word-break:break-all;
+    word-wrap:break-word; */
+}
+
+
+
 .reply-box{
     display: inline-block;
-    width: 899px;
+    width: 850px;
     height: 50px; 
     /* border: #bfe92a 1px solid; */
     box-sizing: border-box;
@@ -181,7 +196,7 @@ line-height: 20px;
 
 .messageSum{
     margin-top: 20px;
-    margin-left: 20px;
+    margin-left: 50px;
 
 }
 
@@ -194,21 +209,23 @@ line-height: 20px;
 /*底下的留言評論*/
 .one-message{
  display: inline-block;
- width: 900px;
- height: 300px;
- margin-top: 20px;
- margin-left: 20px;
- border: #ffb3b3 1px solid;
+ width: 850px;
+ /* height: 300px; */
+ margin: 10px 0px 30px 50px;
+ /* margin-left: 20px; */
+
+ /* border: #ffb3b3 1px solid; */
  position: relative;
 }
 
 .message-top{
     display: flex;
-    margin-top: 5px;
+    margin-top: 30px;
     margin-bottom: 5px;
     margin-left: 5px;
-   vertical-align: text-top;
+    align-items: center;
 }
+
 
 
 .right_info{
@@ -216,7 +233,8 @@ line-height: 20px;
 }
 
 .right_info ul li{
-line-height: 20px;
+line-height: 18px;
+margin-bottom: 5px;
 }
 
 .mem_author{
@@ -233,28 +251,29 @@ line-height: 20px;
 /*留言內容*/
 .inner-message{
     display: inline-block;
-    width: 800px;
+    /* width: 840px; */
     font-weight: 400;
-    height: 200px;
-    border: 1px solid rgb(255, 228, 77);
+    /* height: 800px; */
+    /* border: 1px solid rgb(255, 228, 77); */
     line-height:25px;
     margin-top: 5px;
-    margin-left: 20px;
+    margin-left: 50px;
 }
 
 
  hr.left1 {
-    margin: 140px  0px 0px 0px;
+    margin: 20px  0px 0px 0px;
 	border:0; 
-    border: #ffb3b3 2px solid;
-    width: 80%;
+    border: #ffb3b3 1.5px solid;
+    width: 800px;
     background-color:#ffb3b3;
-	position: absolute;
+	/* position: absolute; */
     bottom:1px;
 } 
 
 .big_left{
      width: 76%;
+     margin-left:40px ;
      display: inline-block;
      /* border: rgb(235, 41, 235) 1px solid; */
 }
@@ -359,6 +378,76 @@ line-height: 20px;
   position: absolute;
   text-align: center;
 }
+
+
+/* 熱門文章區 */
+.hot-articles-area{
+    margin-top: 50px;
+    width: 96%;
+    display: inline-block;
+    position: relative;
+    text-align: left;
+}
+
+.hot-articles-top span{
+    float: left;
+    padding-right: 5px;
+    font-size: 18px;
+    font-weight: 500;
+    /* margin-bottom: 30px; */
+}
+.hot-articles-div{
+    height: 8px;
+}
+
+
+.right1 {
+  border:  1px solid rgb(97, 91, 91);
+  width: 280px;
+  position: absolute;
+  text-align: center;
+}
+
+.hot-articles-box{
+    width: 280px;
+    display: inline-block;
+    text-align: center;
+    /* border: rgb(29, 173, 24) 1px solid; */
+}
+
+
+.hot-articles{ /* 此為ul */
+    display: inline-block;
+    width: 280px;/* 記得在ul要設定寬度 */
+    margin-top: 15px;
+    text-align: left;
+    line-height: 30px;
+}
+
+.hot-articles a{
+    text-decoration: none;
+    color: #000000;
+    transition: 0.2s;
+}
+
+.hot-articles a:hover{
+      color:  #FF80A2;
+     /* color:  #FF80A2; */
+    cursor: pointer;
+}
+
+
+
+
+.hot-articles li{
+    overflow: hidden; /* 超過ul設定的寬度會隱藏 */
+    text-overflow: ellipsis;  /* 單行溢出顯示... 要寫在li */
+    white-space: nowrap; /* 強制不斷行 */
+    font-size: 16px;
+    font-weight: 400;
+}
+
+
 
 
 
