@@ -19,7 +19,7 @@ public interface MemDAO {
 	public void updateBuyHeadshot(MemVO member);
 	//更新會員密碼
 	public void updatePassword(MemVO member);
-	//分頁顯示返回多重查詢總筆數
+	//買家分頁顯示返回多重查詢總筆數
 	public int getBuyMemberRowNumber(String find_username,String find_name,String find_status);
 	//分頁顯示返回買家會員list集合 start:從哪頁開始查詢 rowsPerPage:每次查幾筆
 	public List<MemVO> findBuyMemberByPagination(int start,int rowsPerPage,String find_username,String find_name,String find_status);
@@ -27,4 +27,13 @@ public interface MemDAO {
 	public MemVO getOne(Integer mem_id);
 	//管理員修改買家會員資料
 	public void updateBuyMember(MemVO memVO);
+	//賣家分頁顯示返回多重查詢總筆數
+	public int getSellerMemberRowNumber(String find_username,String find_name,String find_status,String find_shop_status,String mem_role);
+	//分頁顯示返回賣家會員list集合 start:從哪頁開始查詢 rowsPerPage:每次查幾筆
+	public List<MemVO> findSellerMemberByPagination(int start,int rowsPerPage,String find_username,String find_name,String find_status,String find_shop_status,String mem_role);
+	//管理員修改賣家會員資料
+	public void updateSellerMember(MemVO memVO);
+	//更新商店資料
+	public void updateSellerShop(MemVO memVO);
+
 }

@@ -1,5 +1,6 @@
 package com.post.model;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 //文章POST
 public class PostVO implements java.io.Serializable{
@@ -7,7 +8,7 @@ public class PostVO implements java.io.Serializable{
 	private Integer post_id; //文章ID
 	private String post_title; //文章標題
 	private String post_content; //文章內容
-	private Date post_time; //文章發表時間
+	private Timestamp post_time; //文章發表時間
 	private Integer post_cat_id; //文章分類ID
 	private Integer post_mem_id; //文章作者會員ID
 	private Integer post_status; //文章狀態
@@ -15,7 +16,7 @@ public class PostVO implements java.io.Serializable{
 	
 	public PostVO() {}
 	
-	public PostVO(Integer post_id, String post_title, String post_content, Date post_time, Integer post_cat_id,
+	public PostVO(Integer post_id, String post_title, String post_content, Timestamp post_time, Integer post_cat_id,
 			Integer post_mem_id, Integer post_status) {
 		this.post_id = post_id;
 		this.post_title = post_title;
@@ -47,10 +48,10 @@ public class PostVO implements java.io.Serializable{
 	public void setPost_content(String post_content) {
 		this.post_content = post_content;
 	}
-	public Date getPost_time() {
+	public Timestamp getPost_time() {
 		return post_time;
 	}
-	public void setPost_time(Date post_time) {
+	public void setPost_time(Timestamp post_time) {
 		this.post_time = post_time;
 	}
 	public Integer getPost_cat_id() {

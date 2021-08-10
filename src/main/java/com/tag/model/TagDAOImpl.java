@@ -28,12 +28,12 @@ public class TagDAOImpl implements TagDAO {
 		}
 	}
 
-	private static final String INSERT_TAG = "INSERT INTO tag (tag_name) VALUES (?);";
-	private static final String UPDATE = "UPDATE tag set tag_name=? where tag_id = ?";
-	private static final String DELETE = "DELETE FROM tag where tag_id = ?";
-	private static final String GET_ONE_TAG_BY_TAGID = "SELECT * FROM tag where tag_id = ?";
-	private static final String GET_ONE_TAG_BY_TAGNAME = "SELECT * FROM tag where tag_name = ?";
-	private static final String GET_ALL_TAG_BY_TAGID = "SELECT * FROM tag order by tag_id";
+	private static final String INSERT_TAG = "INSERT INTO CFA101G3.TAG (tag_name) VALUES (?);";
+	private static final String UPDATE = "UPDATE CFA101G3.TAG set tag_name=? where tag_id = ?";
+	private static final String DELETE = "DELETE FROM CFA101G3.TAG where tag_id = ?";
+	private static final String GET_ONE_TAG_BY_TAGID = "SELECT * FROM CFA101G3.TAG where tag_id = ?";
+	private static final String GET_ONE_TAG_BY_TAGNAME = "SELECT * FROM CFA101G3.TAG where tag_name = ?";
+	private static final String GET_ALL_TAG_BY_TAGID = "SELECT * FROM CFA101G3.TAG order by tag_id";
 
 	public TagVO insertTag(TagVO tagVO) {
 		Connection con = null;

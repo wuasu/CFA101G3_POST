@@ -26,7 +26,7 @@ body {
 
 .form-select2{
 	margin: 0; 
-	margin-top: 20px;
+	/* margin-top: 10px; */
 }
 
 .po-container {
@@ -48,12 +48,11 @@ body {
 }
 
 .po-top {
-	/*border: 1px solid yellow;*/
-	height: 55px;
+	/* border: 1px solid yellow; */
+	height: 45px;
 	background-color: #FF80A2;
     width: 800px;
-	position: absolute;
-    left: 300px;
+    left: 280px;
 	border-radius: 10px 10px 0 0 ;
 }
 
@@ -65,7 +64,7 @@ body {
 	letter-spacing: 2px;
 	font-weight: 500;
 	text-align: center;
-	line-height: 55px;
+	line-height: 45px;
 	color:  #fcfcfc ;
 }
 
@@ -81,7 +80,7 @@ body {
 
 .inner-mem {
 	display: flex;
-	margin-top: 20px;
+	margin-top: 10px;
 	margin-bottom: 10px;
 	/*border: 1px solid palevioletred;*/
 }

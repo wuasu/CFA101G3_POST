@@ -32,12 +32,12 @@ public class MessageDAOImpl implements MessageDAO {
 		}
 	}
 	
-	private static final String INSERT = "INSERT INTO MESSAGE (MES_POST_ID, MES_MEM_ID, MES_CONTENT, MES_TIME) VALUES (?, ?, ?, ?)";
-	private static final String UPDATE_MES_STATUS = "UPDATE MESSAGE SET MES_STATUS=0 where MES_ID= ?"; // 改成0=隱藏
+	private static final String INSERT = "INSERT INTO CFA101G3.MESSAGE (MES_POST_ID, MES_MEM_ID, MES_CONTENT, MES_TIME) VALUES (?, ?, ?, ?)";
+	private static final String UPDATE_MES_STATUS = "UPDATE CFA101G3.MESSAGE SET MES_STATUS=0 where MES_ID= ?"; // 改成0=隱藏
 	private static final String getBy_mes_post_id = "select s.MES_ID,s.MES_POST_ID,s.MES_MEM_ID,m.MEM_NAME,s.MES_TIME,s.MES_CONTENT,m.MEM_HEADSHOT,\n"
-			+ "s.MES_STATUS from MEMBER m join MESSAGE s on m.MEM_ID = s.MES_MEM_ID where MES_POST_ID=? order by MES_ID desc";
-	private static final String FIND_ONE_BY_MES_ID = "SELECT * FROM MESSAGE where MES_ID = ?";
-    private static final String MESSAGE_COUNT_SORT = "SELECT MES_POST_ID,count(*),CAT_NAME,POST_TITLE from message join POST on MES_POST_ID = POST_ID join CATEGORY on POST_CAT_ID = CAT_ID group by mes_post_id  order by count(*) desc;";
+			+ "s.MES_STATUS from `MEMBER` m join CFA101G3.MESSAGE s on m.MEM_ID = s.MES_MEM_ID where MES_POST_ID=? order by MES_ID desc";
+	private static final String FIND_ONE_BY_MES_ID = "SELECT * FROM CFA101G3.MESSAGE where MES_ID = ?";
+    private static final String MESSAGE_COUNT_SORT = "SELECT MES_POST_ID,count(*),CAT_NAME,POST_TITLE from CFA101G3.MESSAGE join CFA101G3.POST on MES_POST_ID = POST_ID join CATEGORY on POST_CAT_ID = CAT_ID WHERE POST_STATUS = 1 group by mes_post_id order by count(*) desc;";
 	
     @Override
 	public void insert(MessageVO messageVO) {
@@ -189,7 +189,7 @@ public class MessageDAOImpl implements MessageDAO {
 			rs = pstmt.executeQuery();
 //getBy_mes_post_id = 
 //"select s.MES_ID,s.MES_POST_ID,s.MES_MEM_ID,m.MEM_NAME,s.MES_TIME,s.MES_CONTENT,m.MEM_HEADSHOT,\n"
-//+ "s.MES_STATUS from MEMBER m join MESSAGE s on m.MEM_ID = s.MES_MEM_ID where MES_POST_ID=? order by MES_ID desc";
+//+ "s.MES_STATUS from `MEMBER` m join MESSAGE s on m.MEM_ID = s.MES_MEM_ID where MES_POST_ID=? order by MES_ID desc";
 			while (rs.next()) {
 				Map map = new HashMap();
 				map.put("MES_ID", rs.getInt("mes_id"));

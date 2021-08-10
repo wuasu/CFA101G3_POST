@@ -51,6 +51,7 @@ $.ajax({
 
 let urlParams = new URLSearchParams(window.location.search);
 let param = urlParams.get("cat_id");
+// let mem_id = urlParams.get("mem_id");
 let currentPage = urlParams.get("currentPage");
 // rows=每頁要顯示幾篇文章
 let rows = urlParams.get("rows");
@@ -78,7 +79,7 @@ if (param != null) {
                     <div class="right_info">
                         <ul>
                             <li class="mem_author">${result[i].MEM_NAME}</li>
-                            <li class="time">${result[i].POST_TIME}</li>
+                            <li class="time">${TIME(result[i].POST_TIME)}</li>
                         </ul>
                     </div>
                 </div>
@@ -134,7 +135,7 @@ if (param != null) {
                         <div class="right_info">
                             <ul>
                                 <li class="mem_author">${result.list[i].MEM_NAME}</li>
-                                <li class="time">${result.list[i].POST_TIME}</li>
+                                <li class="time">${TIME(result.list[i].POST_TIME)}</li>
                             </ul>
                         </div>
                     </div>
@@ -212,9 +213,58 @@ window.onload = function activePage() {
     $("#activePage" + currentPage).addClass("active");
 }
 
+function TIME(time) {
+    //new Date()可以接毫秒數
+    let date = new Date(time);
+    //date.toLocaleString(); 可以轉換成當地格式
+    datetime = date.toLocaleString();
+    return datetime;
+    console.log(date)
+}
 
 
+//按下我要發文時 判斷是否已登入
+$('#wantpost').on('click', function () {
+    $.ajax({
+        type: "post",
+        url: "../../post/postActionServlet",
+        dataType: 'json',
+        async: false,
+        data: {
+            "action": "mem_post"
+        },
+        success: function (result) {
+            if (result == 0) {
+                swal("請先登入", "才可以發文喔", "info");
+            } else if (result == 1) {
+                window.location.href = 'po_article.html';
+            } else {
+                alert("出4啦")
+            }
+        }
+    });
+})
 
 
+$('#mypostbtn').on('click', function () {
+    $.ajax({
+        type: "post",
+        url: "../../post/postActionServlet",
+        dataType: 'json',
+        async: false,
+        data: {
+            "action": "mem_post"
+        },
+        success: function (result) {
+            console.log(result);
+            if (result == 0) {
+                swal("請先登入", "才可以編輯喔", "info");
+            } else if (result == 1) {
+                window.location.href = 'mypost-list.html';
+            } else {
+                alert("出4啦")
+            }
+        }
+    });
 
-
+})

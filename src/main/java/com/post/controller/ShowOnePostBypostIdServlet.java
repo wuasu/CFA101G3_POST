@@ -2,6 +2,7 @@ package com.post.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +32,16 @@ public class ShowOnePostBypostIdServlet extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");
 		String action = request.getParameter("action");
 		if ("getPost".equals(action)) {
+//			(1, post_id);
+//				map.put("POST_ID", rs.getInt("post_id"));
+//				map.put("POST_TITLE", rs.getString("post_title"));
+//				map.put("POST_CONTENT", rs.getString("post_content"));
+//				map.put("POST_TIME", rs.getTimestamp("post_time"));
+//				map.put("CAT_NAME", rs.getString("cat_name"));
+//				map.put("MEM_NAME", rs.getString("mem_name"));
+//				map.put("MEM_HEADSHOT", rs.getBytes("mem_headshot"));
+//				map.put("POST_STATUS", rs.getInt("post_status"));
+				
 			PostService postService = new PostService();
 			Integer post_id = Integer.parseInt(request.getParameter("post_id"));
 			Map showPost = postService.findByPostId(post_id);

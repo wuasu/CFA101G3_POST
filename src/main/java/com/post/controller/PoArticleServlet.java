@@ -3,6 +3,7 @@ package com.post.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class PoArticleServlet extends HttpServlet {
 		Integer post_cat_id = Integer.parseInt(request.getParameter("post_cat_id"));
 		String post_title = request.getParameter("post_title").trim();
 		String post_content = request.getParameter("post_content").trim();
-		Date post_time = new Date(new java.util.Date().getTime());
+		Timestamp post_time = new Timestamp(new java.util.Date().getTime());
 		String tag_name = request.getParameter("tag_name");
 		String[] tagArray = tag_name.split(",");//將tag_name字串轉成tagArray
 		//須先取得會員身份

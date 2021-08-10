@@ -6,15 +6,18 @@ font-family: 'Sarabun', sans-serif;   英文正體字
 font-family: 'Caveat', cursive; 英文藝術字
 */ 
 #cartIcon{
- font-size: 25px;   
+ font-size: 18px;
 }
 
+/* body{
+    font-family:第一種字體, 第二種字體, "第三種 字體", "通用字";
+  }  */
 
 .top{
    /* position: -webkit-sticky; for Safari */
     position: fixed;
     top: 0;
-    z-index: 20;
+    z-index: 1;
     display: flex;
     justify-content: end;
 }
@@ -36,9 +39,8 @@ font-family: 'Caveat', cursive; 英文藝術字
    color: #FFF;
    text-decoration: none;
    border:1px solid #D5CB8E;
+
 }
-
-
 
 .top{
     /* border:1px solid rgb(12, 39, 126); */
@@ -49,25 +51,12 @@ font-family: 'Caveat', cursive; 英文藝術字
 
 
 
-
 .logo{
     display: block;
     width: 500px;
     /* border:1px solid rgb(92, 27, 65); */
     margin-bottom: 20px;
-
-     position: relative;
-        float: left;
-        margin: 18px 0 0 5px;
-        overflow: hidden;
-        transition-duration: 5s;/**動畫時間**/
 }
-
-
-
-
-
-
 
 .logo img{
     border-radius: 10px;
@@ -143,7 +132,7 @@ font-family: 'Caveat', cursive; 英文藝術字
 } */
 
 .nav1{
-    height: 45px;
+    height: 65px;
     background-color: #c5dad1;
 }
 
@@ -169,14 +158,14 @@ background-color: #c5dad1;
 }
 
 .nav2 a{
+    letter-spacing: 0.5px;
     padding: 5px 0;
     font-weight: 100;
     line-height: 1;
     cursor: pointer;
     text-decoration: none;
     color: #495057;
-    font-family: 'Caveat', cursive;
-       
+    font-family:"Caveat", "cursive","Noto Sans TC", "sans-serif" ;
 }
 
 .nav2 a:hover{

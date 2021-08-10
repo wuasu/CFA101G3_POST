@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 import com.post_tag_ref.model.PostTagRefDAOImpl;
 import com.post_tag_ref.model.PostTagRefJoinVO;
 import com.post_tag_ref.model.PostTagRefVO;
+
 import com.tag.model.TagService;
 import com.tag.model.TagVO;
 //import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -29,23 +30,22 @@ public class PostDAOImpl implements PostDAO {
 			e.printStackTrace();
 		}
 	}
-	private static final String INSERT = "INSERT INTO POST (POST_TITLE, POST_CONTENT, POST_TIME, POST_CAT_ID, POST_MEM_ID) VALUES(?, ?, ?, ?, ?)";
-	private static final String UPDATE = "UPDATE POST set POST_TITLE=?, POST_CONTENT=?, POST_TIME=?, POST_CAT_ID=?, POST_MEM_ID=?, POST_STATUS=?  where post_id = ?";
-	private static final String DELETE = "DELETE FROM POST where POST_ID = ?";
-	private static final String GET_BY_POST_ID = "select p.POST_ID,p.POST_TITLE,p.POST_CONTENT,p.POST_TIME, c.CAT_NAME,m.MEM_NAME,m.MEM_HEADSHOT,p.POST_STATUS from MEMBER m join POST p on m.MEM_ID = p.POST_MEM_ID join CATEGORY c on p.POST_CAT_ID = c.CAT_ID where POST_ID = ? order by POST_ID";
-	private static final String GET_BY_CAT_ID = "select p.POST_ID,p.POST_TITLE,p.POST_CONTENT,p.POST_TIME, c.CAT_ID,c.CAT_NAME,m.MEM_NAME,m.MEM_HEADSHOT,p.POST_STATUS,m.MEM_ID from MEMBER m join POST p on m.MEM_ID = p.POST_MEM_ID join CATEGORY c on p.POST_CAT_ID = c.CAT_ID where CAT_ID = ? order by POST_ID desc";
-	private static final String GET_ALL = "SELECT * FROM POST order by POST_ID";
-	private static final String UPDATE_POST_STATUS = "UPDATE POST set POST_STATUS=0 where POST_ID= ?"; // 0隱藏
-	
+	private static final String INSERT = "INSERT INTO CFA101G3.POST (POST_TITLE, POST_CONTENT, POST_TIME, POST_CAT_ID, POST_MEM_ID) VALUES(?, ?, ?, ?, ?)";
+	private static final String UPDATE = "UPDATE CFA101G3.POST set POST_TITLE=?, POST_CONTENT=?, POST_TIME=?, POST_CAT_ID=?, POST_MEM_ID=?, POST_STATUS=?  where post_id = ?";
+	private static final String DELETE = "DELETE FROM CFA101G3.POST where POST_ID = ?";
+	private static final String GET_BY_POST_ID = "select p.POST_ID,p.POST_TITLE,p.POST_CONTENT,p.POST_TIME,c.CAT_ID, c.CAT_NAME,m.MEM_NAME,m.MEM_HEADSHOT,p.POST_STATUS from `MEMBER` m join CFA101G3.POST p on m.MEM_ID = p.POST_MEM_ID join CATEGORY c on p.POST_CAT_ID = c.CAT_ID where POST_ID = ? order by POST_ID";
+	private static final String GET_BY_CAT_ID = "select p.POST_ID,p.POST_TITLE,p.POST_CONTENT,p.POST_TIME, c.CAT_ID,c.CAT_NAME,m.MEM_NAME,m.MEM_HEADSHOT,p.POST_STATUS,m.MEM_ID from `MEMBER` m join CFA101G3.POST p on m.MEM_ID = p.POST_MEM_ID join CFA101G3.CATEGORY c on p.POST_CAT_ID = c.CAT_ID where CAT_ID = ? and POST_STATUS = 1 order by POST_ID desc";
+	private static final String GET_ALL = "SELECT * FROM CFA101G3.POST WHERE POST_STATUS = 1 order by POST_ID";
+	private static final String UPDATE_POST_STATUS = "UPDATE CFA101G3.POST set POST_STATUS=0 where POST_ID= ?"; // 0隱藏
 	 //join版的表格要設定order by POST_ID 才會抓到最新的文章(不然會抓到最新的會員)
-	private static final String GET_POST = "select p.POST_ID,p.POST_TITLE,p.POST_CONTENT,p.POST_TIME, c.CAT_NAME,m.MEM_NAME,m.MEM_HEADSHOT,p.POST_STATUS from MEMBER m join POST p on m.MEM_ID = p.POST_MEM_ID join CATEGORY c on p.POST_CAT_ID = c.CAT_ID order by POST_ID";
+	private static final String GET_POST = "select p.POST_ID,p.POST_TITLE,p.POST_CONTENT,p.POST_TIME, c.CAT_NAME,m.MEM_NAME,m.MEM_HEADSHOT,p.POST_STATUS from `MEMBER` m join CFA101G3.POST p on m.MEM_ID = p.POST_MEM_ID join CFA101G3.CATEGORY c on p.POST_CAT_ID = c.CAT_ID WHERE POST_STATUS = 1 order by POST_ID";
  
-	
 	//找文章總數
-	private static final String Find_Total_Count = "SELECT COUNT(*) FROM POST";
+	private static final String Find_Total_Count = "SELECT COUNT(*) FROM CFA101G3.POST";
 	//當下分頁的起始 與每頁顯示的文章數
-	private static final String Find_By_Page = "select p.POST_ID,p.POST_TITLE,p.POST_CONTENT,p.POST_TIME, c.CAT_NAME,m.MEM_NAME,m.MEM_HEADSHOT,p.POST_STATUS,m.MEM_ID from MEMBER m join POST p on m.MEM_ID = p.POST_MEM_ID join CATEGORY c on p.POST_CAT_ID = c.CAT_ID order by POST_ID desc LIMIT ? , ?";
-	
+	private static final String Find_By_Page = "select p.POST_ID,p.POST_TITLE,p.POST_CONTENT,p.POST_TIME, c.CAT_NAME,m.MEM_NAME,m.MEM_HEADSHOT,p.POST_STATUS,m.MEM_ID from `MEMBER` m join CFA101G3.POST p on m.MEM_ID = p.POST_MEM_ID join CFA101G3.CATEGORY c on p.POST_CAT_ID = c.CAT_ID order by POST_ID desc LIMIT ? , ?";
+	//用作者ID找文章資訊
+	private static final String Find_By_Writer = "SELECT * FROM CFA101G3.POST WHERE POST_MEM_ID = ?";
 	
 	
 	public void insert(PostVO post, List<TagVO> addTag) {
@@ -59,7 +59,7 @@ public class PostDAOImpl implements PostDAO {
 
 			pstmt.setString(1, post.getPost_title());
 			pstmt.setString(2, post.getPost_content());
-			pstmt.setDate(3, post.getPost_time());
+			pstmt.setTimestamp(3, post.getPost_time());
 			pstmt.setInt(4, post.getPost_cat_id());
 			pstmt.setInt(5, post.getPost_mem_id());
 			pstmt.executeUpdate();
@@ -119,7 +119,7 @@ public class PostDAOImpl implements PostDAO {
 	}
 
 //修改資料
-	public void update(PostVO post) {
+	public void update(PostVO postVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -130,13 +130,13 @@ public class PostDAOImpl implements PostDAO {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setString(1, post.getPost_title());
-			pstmt.setString(2, post.getPost_content());
-			pstmt.setDate(3, post.getPost_time());
-			pstmt.setInt(4, post.getPost_cat_id());
-			pstmt.setInt(5, post.getPost_mem_id());
-			pstmt.setInt(6, post.getPost_status());
-			pstmt.setInt(7, post.getPost_id());
+			pstmt.setString(1, postVO.getPost_title());
+			pstmt.setString(2, postVO.getPost_content());
+			pstmt.setTimestamp(3, postVO.getPost_time());
+			pstmt.setInt(4, postVO.getPost_cat_id());
+			pstmt.setInt(5, postVO.getPost_mem_id());
+			pstmt.setInt(6, postVO.getPost_status());
+			pstmt.setInt(7, postVO.getPost_id());
 
 			pstmt.executeUpdate();
 
@@ -215,7 +215,8 @@ public class PostDAOImpl implements PostDAO {
 				map.put("POST_ID", rs.getInt("post_id"));
 				map.put("POST_TITLE", rs.getString("post_title"));
 				map.put("POST_CONTENT", rs.getString("post_content"));
-				map.put("POST_TIME", rs.getDate("post_time"));
+				map.put("POST_TIME", rs.getTimestamp("post_time"));
+				map.put("CAT_ID", rs.getString("cat_id"));
 				map.put("CAT_NAME", rs.getString("cat_name"));
 				map.put("MEM_NAME", rs.getString("mem_name"));
 				map.put("MEM_HEADSHOT", rs.getBytes("mem_headshot"));
@@ -272,7 +273,7 @@ public class PostDAOImpl implements PostDAO {
 				post.setPost_id(rs.getInt("post_id"));
 				post.setPost_title(rs.getString("post_title"));
 				post.setPost_content(rs.getString("post_content"));
-				post.setPost_time(rs.getDate("post_time"));
+				post.setPost_time(rs.getTimestamp("post_time"));
 				post.setPost_cat_id(rs.getInt("post_cat_id"));
 				post.setPost_mem_id(rs.getInt("post_mem_id"));
 				post.setPost_status(rs.getInt("post_status"));
@@ -307,7 +308,7 @@ public class PostDAOImpl implements PostDAO {
 		return list;
 	}
 
-	public void updatePostStatus(PostVO post) {
+	public void updatePostStatus(PostVO postVO) {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -316,7 +317,7 @@ public class PostDAOImpl implements PostDAO {
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_POST_STATUS);
-			pstmt.setInt(1, post.getPost_id());
+			pstmt.setInt(1, postVO.getPost_id());
 
 			pstmt.executeUpdate();
 
@@ -357,7 +358,7 @@ public class PostDAOImpl implements PostDAO {
 				map.put("POST_ID", rs.getInt("post_id"));
 				map.put("POST_TITLE", rs.getString("post_title"));
 				map.put("POST_CONTENT", rs.getString("post_content"));
-				map.put("POST_TIME", rs.getDate("post_time"));
+				map.put("POST_TIME", rs.getTimestamp("post_time"));
 				map.put("CAT_NAME", rs.getString("cat_name"));
 				map.put("MEM_NAME", rs.getString("mem_name"));
 				map.put("MEM_HEADSHOT", rs.getBytes("mem_headshot"));
@@ -415,7 +416,7 @@ public class PostDAOImpl implements PostDAO {
 				map.put("POST_ID", rs.getInt("post_id"));
 				map.put("POST_TITLE", rs.getString("post_title"));
 				map.put("POST_CONTENT", rs.getString("post_content"));
-				map.put("POST_TIME", rs.getDate("post_time"));
+				map.put("POST_TIME", rs.getTimestamp("post_time"));
 				map.put("CAT_ID", rs.getInt("cat_id"));
 				map.put("CAT_NAME", rs.getString("cat_name"));
 				map.put("MEM_NAME", rs.getString("mem_name"));
@@ -513,7 +514,7 @@ public class PostDAOImpl implements PostDAO {
 				map.put("POST_ID", rs.getInt("post_id"));
 				map.put("POST_TITLE", rs.getString("post_title"));
 				map.put("POST_CONTENT", rs.getString("post_content"));
-				map.put("POST_TIME", rs.getDate("post_time"));
+				map.put("POST_TIME", rs.getTimestamp("post_time"));
 				map.put("CAT_NAME", rs.getString("cat_name"));
 				map.put("MEM_NAME", rs.getString("mem_name"));
 				map.put("POST_STATUS", rs.getInt("post_status"));
@@ -523,6 +524,63 @@ public class PostDAOImpl implements PostDAO {
 				
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	
+	
+	// 根據作者ID尋找文章們
+	@Override
+	public List findByWriter(Integer post_mem_id) {
+//		Find_By_Writer = "SELECT * FROM POST WHERE POST_MEM_ID = ?"
+		List list = new ArrayList();
+		PostVO postVO =null;
+		Connection con =null;
+		PreparedStatement pstmt =null;
+		ResultSet rs = null;
+		//連線開始
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareCall(Find_By_Writer);
+			pstmt.setInt(1, post_mem_id);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				postVO = new PostVO();
+				postVO.setPost_id(rs.getInt("post_id"));
+				postVO.setPost_title(rs.getString("post_title"));
+				postVO.setPost_content(rs.getString("post_content"));
+				postVO.setPost_time(rs.getTimestamp("post_time"));
+				postVO.setPost_cat_id(rs.getInt("post_cat_id"));
+				postVO.setPost_mem_id(rs.getInt("post_mem_id"));
+				postVO.setPost_status(rs.getInt("post_status"));
+				list.add(postVO);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		} finally {
 			if (rs != null) {
 				try {

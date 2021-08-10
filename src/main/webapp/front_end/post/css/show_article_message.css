@@ -179,6 +179,7 @@ line-height: 20px;
      text-align: right;
 }
 
+/* 送出按鈕 */
 .reply_btn{
     width: 80px;
     height: 35px;
@@ -192,7 +193,18 @@ line-height: 20px;
     text-decoration: none;
     font-size: 16px;
     font-weight: 500;
+    /* visibility:hidden; 為肉眼看不見  使用display: none=整個消失 */
+    display: none;
 }
+
+
+/* textarea有輸入值 送出按鈕才會出現 */
+.showbtn{
+    /* visibility: visible; */
+display: inline-block;
+}
+
+
 
 .messageSum{
     margin-top: 20px;
@@ -446,8 +458,6 @@ margin-bottom: 5px;
     font-size: 16px;
     font-weight: 400;
 }
-
-
 
 
 
