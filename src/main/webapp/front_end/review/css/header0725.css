@@ -5,22 +5,24 @@ font-family: 'Noto Sans TC', sans-serif  思源黑體 包含中英文;
 font-family: 'Sarabun', sans-serif;   英文正體字  
 font-family: 'Caveat', cursive; 英文藝術字
 */ 
-header{
-   
+#cartIcon{
+ font-size: 25px;   
 }
+
 
 .top{
    /* position: -webkit-sticky; for Safari */
     position: fixed;
     top: 0;
-    z-index: 1;
+    z-index: 20;
+    display: flex;
+    justify-content: end;
 }
 
 .top ul{
-  
-    height: 30px;
+   
     display: inline-block;
-    padding-left: 80%;
+    padding-left: 75%;
 
 }
 
@@ -33,9 +35,10 @@ header{
 .top ul li a{
    color: #FFF;
    text-decoration: none;
-   /* border:1px solid rgb(248, 14, 14); */
-
+   border:1px solid #D5CB8E;
 }
+
+
 
 .top{
     /* border:1px solid rgb(12, 39, 126); */
@@ -46,12 +49,25 @@ header{
 
 
 
+
 .logo{
     display: block;
     width: 500px;
     /* border:1px solid rgb(92, 27, 65); */
     margin-bottom: 20px;
+
+     position: relative;
+        float: left;
+        margin: 18px 0 0 5px;
+        overflow: hidden;
+        transition-duration: 5s;/**動畫時間**/
 }
+
+
+
+
+
+
 
 .logo img{
     border-radius: 10px;
